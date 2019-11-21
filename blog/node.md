@@ -41,3 +41,14 @@
     // console.log(obj1)
     // console.log(obj2)
 ```
+
+### javascript中“=>”符号的意思
+##### =>是ES6语法中的arrow function
+##### 举例：(x) => x + 6
+> 相当于：
+```
+    Function (x) {
+        return x+6;
+    }
+```
+
