@@ -28,7 +28,12 @@
 ### git提交分支的创建以及切换
 * git branch    //查看分支
 * git branch dev    //创建一个叫“dev”的分支
+* git branch -d dev    //删除一个叫“dev”的分支
+* git push origin dev // 提交该分支到远程仓库
+* git push origin -d dev //从远程仓库中删除dev分支（分支删除时不要在需要删除的分支上操作）
 * git checkout -b ticket/5 origin/master    //分支的切换由ticket/3切换到ticket/5上去
+* git checkout master    //分支的切换至master
+* git merge dev  //将dev分支修改的内容合并到当前分支
 
 ### 修改git 提交的用户名和用户Email命令
 * #### 首先查看全局配置：
