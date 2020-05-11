@@ -29,7 +29,7 @@ git reflog  // 查看回退版本后仓库中消失的历史提交记录，适�
 ### git提交分支的创建以及切换
 * git branch    //查看分支
 * git branch dev    //创建一个叫“dev”的分支
-* git branch dev 7c87   //创建一个dev分支并将哈希值为“7c87”版本的代码放在dev分支中
+* git branch dev 7c87   //在本地创建一个dev分支并将哈希值为“7c87”版本的代码放在dev分支中
 * git branch -d dev    //删除一个叫“dev”的分支
 * git push origin dev // 提交该分支到远程仓库
 * git push origin -d dev //从远程仓库中删除dev分支（分支删除时不要在需要删除的分支上操作）
