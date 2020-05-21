@@ -1,0 +1,8 @@
+{
+  "name": "gsrevery.github.io",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/gsrevery/gsrevery.github.io.git",
+  "author": "gaopan <1780171054@qq.com>",
+  "license": "MIT"
+}
