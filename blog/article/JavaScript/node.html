@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>深拷贝和浅拷贝 | gp&#39;s blog</title>
+    <title>javascript常用方法 | gp&#39;s blog</title>
     <meta name="generator" content="VuePress 1.5.0">
     
     <meta name="description" content="学而时习之不亦说乎，有朋至远方来不亦乐乎。">
-    <link rel="preload" href="/blog/assets/css/0.styles.9305670d.css" as="style"><link rel="preload" href="/blog/assets/js/app.ed02c71f.js" as="script"><link rel="preload" href="/blog/assets/js/2.4b35dd3f.js" as="script"><link rel="preload" href="/blog/assets/js/7.6b8ac183.js" as="script"><link rel="prefetch" href="/blog/assets/js/3.b472d0bf.js"><link rel="prefetch" href="/blog/assets/js/4.c563d1c6.js"><link rel="prefetch" href="/blog/assets/js/5.78339bac.js"><link rel="prefetch" href="/blog/assets/js/6.36eeb716.js"><link rel="prefetch" href="/blog/assets/js/8.cc286de4.js"><link rel="prefetch" href="/blog/assets/js/9.f4621872.js">
+    <link rel="preload" href="/blog/assets/css/0.styles.9305670d.css" as="style"><link rel="preload" href="/blog/assets/js/app.fed7ea3a.js" as="script"><link rel="preload" href="/blog/assets/js/2.4b35dd3f.js" as="script"><link rel="preload" href="/blog/assets/js/7.17d9d4b2.js" as="script"><link rel="prefetch" href="/blog/assets/js/3.b472d0bf.js"><link rel="prefetch" href="/blog/assets/js/4.c563d1c6.js"><link rel="prefetch" href="/blog/assets/js/5.78339bac.js"><link rel="prefetch" href="/blog/assets/js/6.3e31f0f0.js"><link rel="prefetch" href="/blog/assets/js/8.910e4e3a.js"><link rel="prefetch" href="/blog/assets/js/9.a04b842a.js">
     <link rel="stylesheet" href="/blog/assets/css/0.styles.9305670d.css">
   </head>
   <body>
@@ -19,7 +19,37 @@
   Blog
 </a></div><div class="nav-item"><a href="/blog/aboutMe.html" class="nav-link">
   Resume
-</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/blog/article/JavaScript/rule.html" class="sidebar-link">前端代码规范</a></li><li><a href="/blog/article/JavaScript/node.html" aria-current="page" class="active sidebar-link">深拷贝和浅拷贝</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/node.html#对象拷贝主要是针对：原对象不变，改变新对象内的元素。" class="sidebar-link">对象拷贝主要是针对：原对象不变，改变新对象内的元素。</a></li><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/node.html#浅拷贝：适用于只能改变对象内的一层。" class="sidebar-link">浅拷贝：适用于只能改变对象内的一层。</a></li><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/node.html#深拷贝：适用于可以改变对象内的很多层。比如对象中包含数组，数组中包含对象，对象中还有数组，这时候如果我们要改变最里层数组中的元素，就需要使用到深拷贝。" class="sidebar-link">深拷贝：适用于可以改变对象内的很多层。比如对象中包含数组，数组中包含对象，对象中还有数组，这时候如果我们要改变最里层数组中的元素，就需要使用到深拷贝。</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/node.html#javascript中-符号的意思" class="sidebar-link">javascript中“=&gt;”符号的意思</a></li></ul></li></ul></li><li><a href="/blog/article/Other/git.html" class="sidebar-link">git的使用说明</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="深拷贝和浅拷贝"><a href="#深拷贝和浅拷贝" class="header-anchor">#</a> 深拷贝和浅拷贝</h1> <h2 id="对象拷贝主要是针对：原对象不变，改变新对象内的元素。"><a href="#对象拷贝主要是针对：原对象不变，改变新对象内的元素。" class="header-anchor">#</a> 对象拷贝主要是针对：原对象不变，改变新对象内的元素。</h2> <h2 id="浅拷贝：适用于只能改变对象内的一层。"><a href="#浅拷贝：适用于只能改变对象内的一层。" class="header-anchor">#</a> 浅拷贝：适用于只能改变对象内的一层。</h2> <h2 id="深拷贝：适用于可以改变对象内的很多层。比如对象中包含数组，数组中包含对象，对象中还有数组，这时候如果我们要改变最里层数组中的元素，就需要使用到深拷贝。"><a href="#深拷贝：适用于可以改变对象内的很多层。比如对象中包含数组，数组中包含对象，对象中还有数组，这时候如果我们要改变最里层数组中的元素，就需要使用到深拷贝。" class="header-anchor">#</a> 深拷贝：适用于可以改变对象内的很多层。比如对象中包含数组，数组中包含对象，对象中还有数组，这时候如果我们要改变最里层数组中的元素，就需要使用到深拷贝。</h2> <ol><li>object.assign //对象浅拷贝，obj1复制给obj2
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/blog/article/JavaScript/rule.html" class="sidebar-link">前端代码规范</a></li><li><a href="/blog/article/JavaScript/node.html" aria-current="page" class="active sidebar-link">javascript常用方法</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/node.html#​判断复杂数据类型的方法" class="sidebar-link">​判断复杂数据类型的方法</a></li><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/node.html#​数据在本地存取的方式" class="sidebar-link">​数据在本地存取的方式.</a></li><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/node.html#for-in循环遍历对象得到key和value" class="sidebar-link">for in循环遍历对象得到key和value</a></li><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/node.html#for-of循环遍历数组得到其中的数据项或者遍历字符串得到单个数据项" class="sidebar-link">for of循环遍历数组得到其中的数据项或者遍历字符串得到单个数据项</a></li><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/node.html#let-与-const的区别" class="sidebar-link">let 与 const的区别</a></li><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/node.html#深拷贝和浅拷贝" class="sidebar-link">深拷贝和浅拷贝</a></li><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/node.html#javascript中-符号的意思" class="sidebar-link">javascript中“=&gt;”符号的意思</a></li></ul></li><li><a href="/blog/article/Other/git.html" class="sidebar-link">git的使用说明</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="javascript常用方法"><a href="#javascript常用方法" class="header-anchor">#</a> javascript常用方法</h1> <h2 id="​判断复杂数据类型的方法"><a href="#​判断复杂数据类型的方法" class="header-anchor">#</a> ​判断复杂数据类型的方法</h2> <p>​</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>    eg: 
+        var a = { 1, 2, 3 }
+        a.constructor == ture
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h2 id="​数据在本地存取的方式"><a href="#​数据在本地存取的方式" class="header-anchor">#</a> ​数据在本地存取的方式.</h2> <p>​</p> <ul><li>数据在本地sessionStorage中存取</li></ul> <ol><li>存：
+window.sessionStorage.setItem('goodsData', JSON.stringify(agencyInformationData))
+goodsData 存在sessionStorage中的名字
+agencyInformationData 需要进行存储的数据
+JSON.stringify() 将数据转换成json格式</li> <li>取：
+JSON.parse(window.sessionStorage.getItem('goodsData'))
+goodsData 在sessionStorage中取出名字为goodsData 的数据
+JSON.parse() 将存储的 JSON 字符串转换为对象</li></ol> <ul><li>数据在本地localStorage中存取与sessionStorage一致</li></ul> <ol><li>存：
+window.localStorage.setItem('goodsData', JSON.stringify(agencyInformationData))</li> <li>取：
+JSON.parse(window.localStorage.getItem('goodsData'))</li></ol> <p>​</p> <h2 id="for-in循环遍历对象得到key和value"><a href="#for-in循环遍历对象得到key和value" class="header-anchor">#</a> for in循环遍历对象得到key和value</h2> <ul><li>获取obj对象的key值</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>    for ( let a in obj) {
+        sonsole.log(a)
+    }
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><ul><li>获取obj对象的value值</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>    for ( let a in obj) {
+        console.log(obj[a])
+    }
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>​</p> <h2 id="for-of循环遍历数组得到其中的数据项或者遍历字符串得到单个数据项"><a href="#for-of循环遍历数组得到其中的数据项或者遍历字符串得到单个数据项" class="header-anchor">#</a> for of循环遍历数组得到其中的数据项或者遍历字符串得到单个数据项</h2> <ul><li>获取数组中的数据</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>    for (let data of arr) {
+        console.log(data)
+    }
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><ul><li>获取字符串中的数据</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>    for (let data of string) {
+        console.log(data)
+    }
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h2 id="let-与-const的区别"><a href="#let-与-const的区别" class="header-anchor">#</a> let 与 const的区别</h2> <ul><li>let声明的变量可以改变，值和类型都可以改变，没有限制。</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>    let a = 10
+    a = 20
+    console.log(a) // 打印出来为20
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><ul><li>const声明的变量不得改变值，这意味着，const一旦声明变量，就必须立即初始化，不能留到以后赋值。</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>    const b = 30
+    b = 40 // 这里就会提示报错
+    console.log(b) // 打印出来为 30
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h2 id="深拷贝和浅拷贝"><a href="#深拷贝和浅拷贝" class="header-anchor">#</a> 深拷贝和浅拷贝</h2> <ul><li>对象拷贝主要是针对：原对象不变，改变新对象内的元素。</li> <li>浅拷贝：适用于只能改变对象内的一层。</li> <li>深拷贝：适用于可以改变对象内的很多层。比如对象中包含数组，数组中包含对象，对象中还有数组，这时候如果我们要改变最里层数组中的元素，就需要使用到深拷贝。</li></ul> <ol><li>object.assign //对象浅拷贝，obj1复制给obj2
 const obj1 = {a: 1};
 const obj2 = {};
 Object.assign( obj2, obj1)
@@ -51,7 +81,7 @@ const obj2 = {...obj1};</li></ol> <div class="language- line-numbers-mode"><pre 
     // obj2.num[0].oneOne.oneoneone.two = '000'
     // console.log(obj1)
     // console.log(obj2)
-</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><h3 id="javascript中-符号的意思"><a href="#javascript中-符号的意思" class="header-anchor">#</a> javascript中“=&gt;”符号的意思</h3> <h5 id="是es6语法中的arrow-function"><a href="#是es6语法中的arrow-function" class="header-anchor">#</a> =&gt;是ES6语法中的arrow function</h5> <h5 id="举例：-x-x-6"><a href="#举例：-x-x-6" class="header-anchor">#</a> 举例：(x) =&gt; x + 6</h5> <blockquote><p>相当于：</p></blockquote> <div class="language- line-numbers-mode"><pre class="language-text"><code>    Function (x) {
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><h2 id="javascript中-符号的意思"><a href="#javascript中-符号的意思" class="header-anchor">#</a> javascript中“=&gt;”符号的意思</h2> <ul><li>=&gt;是ES6语法中的arrow function</li> <li>举例：(x) =&gt; x + 6</li></ul> <blockquote><p>相当于：</p></blockquote> <div class="language- line-numbers-mode"><pre class="language-text"><code>    Function (x) {
         return x+6;
     }
 </code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
@@ -63,6 +93,6 @@ const obj2 = {...obj1};</li></ol> <div class="language- line-numbers-mode"><pre 
       </a>
       →
     </span></p></div> </main></div><div class="global-ui"></div></div>
-    <script src="/blog/assets/js/app.ed02c71f.js" defer></script><script src="/blog/assets/js/2.4b35dd3f.js" defer></script><script src="/blog/assets/js/7.6b8ac183.js" defer></script>
+    <script src="/blog/assets/js/app.fed7ea3a.js" defer></script><script src="/blog/assets/js/2.4b35dd3f.js" defer></script><script src="/blog/assets/js/7.17d9d4b2.js" defer></script>
   </body>
 </html>
