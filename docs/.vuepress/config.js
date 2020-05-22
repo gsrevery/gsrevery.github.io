@@ -1,6 +1,7 @@
 module.exports = {
     title: "gp's blog",
-    description: '学而时习之不亦说乎，有朋至远方来不亦乐乎。',
+	description: '学而时习之不亦说乎，有朋至远方来不亦乐乎。',
+	dest: './output',  // 输出文件
 	base: '/blog/',
 	head: ['link', { rel: 'icon', href: '/logo.png' }],
 	repo: 'git@github.com:gsrevery/blog.git',
