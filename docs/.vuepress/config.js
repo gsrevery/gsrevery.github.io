@@ -4,7 +4,7 @@ module.exports = {
 	dest: './output', // 打包文件
 	base: '/output/',
 	// head: ['link', { rel: 'icon', href: '/logo.png' }],
-	repo: 'git@github.com:gsrevery/blog.git',
+	repo: 'git@github.com:gsrevery/gsrevery.github.io.git',
 	port: 1314,
 	markdown: {
         lineNumbers: true
