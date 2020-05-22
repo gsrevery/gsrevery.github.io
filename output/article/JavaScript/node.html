@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>深拷贝和浅拷贝 | gp&#39;s blog</title>
+    <meta name="generator" content="VuePress 1.5.0">
+    
+    <meta name="description" content="学而时习之不亦说乎，有朋至远方来不亦乐乎。">
+    <link rel="preload" href="/blog/assets/css/0.styles.9305670d.css" as="style"><link rel="preload" href="/blog/assets/js/app.bb9ee9a8.js" as="script"><link rel="preload" href="/blog/assets/js/2.4b35dd3f.js" as="script"><link rel="preload" href="/blog/assets/js/7.1223fb2e.js" as="script"><link rel="prefetch" href="/blog/assets/js/3.b472d0bf.js"><link rel="prefetch" href="/blog/assets/js/4.c563d1c6.js"><link rel="prefetch" href="/blog/assets/js/5.78339bac.js"><link rel="prefetch" href="/blog/assets/js/6.3e31f0f0.js"><link rel="prefetch" href="/blog/assets/js/8.cc286de4.js"><link rel="prefetch" href="/blog/assets/js/9.f4621872.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.9305670d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog/" class="home-link router-link-active"><!----> <span class="site-name">gp's blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/article/Other/git.html" class="nav-link">
+  Blog
+</a></div><div class="nav-item"><a href="/blog/aboutMe.html" class="nav-link">
+  Resume
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/blog/article/Other/git.html" class="nav-link">
+  Blog
+</a></div><div class="nav-item"><a href="/blog/aboutMe.html" class="nav-link">
+  Resume
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/blog/article/JavaScript/rule.html" class="sidebar-link">前端代码规范</a></li><li><a href="/blog/article/JavaScript/node.html" aria-current="page" class="active sidebar-link">深拷贝和浅拷贝</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/node.html#对象拷贝主要是针对：原对象不变，改变新对象内的元素。" class="sidebar-link">对象拷贝主要是针对：原对象不变，改变新对象内的元素。</a></li><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/node.html#浅拷贝：适用于只能改变对象内的一层。" class="sidebar-link">浅拷贝：适用于只能改变对象内的一层。</a></li><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/node.html#深拷贝：适用于可以改变对象内的很多层。比如对象中包含数组，数组中包含对象，对象中还有数组，这时候如果我们要改变最里层数组中的元素，就需要使用到深拷贝。" class="sidebar-link">深拷贝：适用于可以改变对象内的很多层。比如对象中包含数组，数组中包含对象，对象中还有数组，这时候如果我们要改变最里层数组中的元素，就需要使用到深拷贝。</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/node.html#javascript中-符号的意思" class="sidebar-link">javascript中“=&gt;”符号的意思</a></li></ul></li></ul></li><li><a href="/blog/article/Other/git.html" class="sidebar-link">git的使用说明</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="深拷贝和浅拷贝"><a href="#深拷贝和浅拷贝" class="header-anchor">#</a> 深拷贝和浅拷贝</h1> <h2 id="对象拷贝主要是针对：原对象不变，改变新对象内的元素。"><a href="#对象拷贝主要是针对：原对象不变，改变新对象内的元素。" class="header-anchor">#</a> 对象拷贝主要是针对：原对象不变，改变新对象内的元素。</h2> <h2 id="浅拷贝：适用于只能改变对象内的一层。"><a href="#浅拷贝：适用于只能改变对象内的一层。" class="header-anchor">#</a> 浅拷贝：适用于只能改变对象内的一层。</h2> <h2 id="深拷贝：适用于可以改变对象内的很多层。比如对象中包含数组，数组中包含对象，对象中还有数组，这时候如果我们要改变最里层数组中的元素，就需要使用到深拷贝。"><a href="#深拷贝：适用于可以改变对象内的很多层。比如对象中包含数组，数组中包含对象，对象中还有数组，这时候如果我们要改变最里层数组中的元素，就需要使用到深拷贝。" class="header-anchor">#</a> 深拷贝：适用于可以改变对象内的很多层。比如对象中包含数组，数组中包含对象，对象中还有数组，这时候如果我们要改变最里层数组中的元素，就需要使用到深拷贝。</h2> <ol><li>object.assign //对象浅拷贝，obj1复制给obj2
+const obj1 = {a: 1};
+const obj2 = {};
+Object.assign( obj2, obj1)
+拷贝对象时，只能拷贝一层</li> <li>对象深拷贝
+const obj1 = {a: 1};
+const obj2 = JSON.parse(JSON.stringify(obj1));</li> <li>ES6扩展运算符（…）//对象浅拷贝，obj1复制给obj2
+const obj1 = {a: 1};
+const obj2 = {...obj1};</li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>    // const obj1 = {name: '高攀', age: '23', num: [{one: '1', oneOne: {one: '11', two: '22', oneoneone: {one: '111', two: '222'}}}, {two: '2'}, {three: '3'}, {four: '4'}], money: {美元: '$', 人民币: '￥'}}
+    // const obj2 = obj1
+    // obj2.name = 'zrm'
+    // console.log(obj1)
+    // console.log(obj2)
+    //浅拷贝
+    // const obj1 = {name: '高攀', age: '23', num: [{one: '1', oneOne: {one: '11', two: '22', oneoneone: {one: '111', two: '222'}}}, {two: '2'}, {three: '3'}, {four: '4'}], money: {美元: '$', 人民币: '￥'}}
+    // const obj2 = {}
+    // Object.assign(obj2, obj1)
+    // obj2.name = 'gp'
+    // obj2.num[1].oneoneone = '000'
+    
+    //浅拷贝
+    const obj1 = {name: '高攀', age: '23', num: [{one: '1', oneOne: {one: '11', two: '22', oneoneone: {one: '111', two: '222'}}}, {two: '2'}, {three: '3'}, {four: '4'}], money: {美元: '$', 人民币: '￥'}}
+    const obj2 = {...obj1}
+    obj2.name = 'gp'
+    console.log(obj1)
+    console.log(obj2)
+    //深拷贝
+    // const obj1 = {name: '高攀', age: '23', num: [{one: '1', oneOne: {one: '11', two: '22', oneoneone: {one: '111', two: '222'}}}, {two: '2'}, {three: '3'}, {four: '4'}], money: {美元: '$', 人民币: '￥'}}
+    // const obj2 = JSON.parse(JSON.stringify(obj1));
+    // obj2.num[0].oneOne.oneoneone.two = '000'
+    // console.log(obj1)
+    // console.log(obj2)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><h3 id="javascript中-符号的意思"><a href="#javascript中-符号的意思" class="header-anchor">#</a> javascript中“=&gt;”符号的意思</h3> <h5 id="是es6语法中的arrow-function"><a href="#是es6语法中的arrow-function" class="header-anchor">#</a> =&gt;是ES6语法中的arrow function</h5> <h5 id="举例：-x-x-6"><a href="#举例：-x-x-6" class="header-anchor">#</a> 举例：(x) =&gt; x + 6</h5> <blockquote><p>相当于：</p></blockquote> <div class="language- line-numbers-mode"><pre class="language-text"><code>    Function (x) {
+        return x+6;
+    }
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/blog/article/JavaScript/rule.html" class="prev">
+        前端代码规范
+      </a></span> <span class="next"><a href="/blog/article/Other/git.html">
+        git的使用说明
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/blog/assets/js/app.bb9ee9a8.js" defer></script><script src="/blog/assets/js/2.4b35dd3f.js" defer></script><script src="/blog/assets/js/7.1223fb2e.js" defer></script>
+  </body>
+</html>
