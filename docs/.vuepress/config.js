@@ -16,7 +16,7 @@ module.exports = {
 	themeConfig: {
         nav: [{
             text: 'Blog',
-            link: 'JavaScript/rule'
+            link: '/article/JavaScript/rule'
         }, {
             text: 'Resume',
             link: '/aboutMe'
