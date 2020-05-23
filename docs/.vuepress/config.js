@@ -4,7 +4,6 @@ module.exports = {
 	// dest: './blog' 打包文件的存放位置
 	// 上传到github上面，博客的页面就是在该文件中找的。
 	// blog文件下的index.html页面有相关路径可以参考。
-
 	// base: '/blog/'  打包文件的基础路径，如果这里的blog改变，打包文件下的index.html页面的相关路径也会改变。
 	dest: './blog', 
 	base: '/blog/',
@@ -17,7 +16,7 @@ module.exports = {
 	themeConfig: {
         nav: [{
             text: 'Blog',
-            link: '/article/Other/git'
+            link: 'JavaScript/rule'
         }, {
             text: 'Resume',
             link: '/aboutMe'
@@ -26,6 +25,7 @@ module.exports = {
         sidebar: {
             '/article/': [
                 'JavaScript/rule',
+                'JavaScript/QA-daily',
                 'JavaScript/node',
                 'Other/git',
             ]
