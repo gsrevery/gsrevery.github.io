@@ -21,13 +21,13 @@ module.exports = {
             text: 'Resume',
             link: '/aboutMe'
         }],
-        sidebarDepth: 2,
+        sidebarDepth: 3,
         sidebar: {
             '/article/': [
                 'JavaScript/rule',
                 'JavaScript/QA-daily',
                 'JavaScript/node',
-                'Other/git',
+                'Other/git'
             ]
         }
     }
