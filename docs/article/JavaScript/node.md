@@ -70,6 +70,66 @@
     console.log(b) // 打印出来为 30
 ```
 
+## Symbol的使用
+
+### 新的基础数据类型
+```
+    let s1 = Symbol()
+    let s2 = Symbol('gaopan')
+    typeof s1 typeof s2 输出都为"symbol"
+```
+
+### 使用Symbol来作为对象属性名(key)
+* let obj1 = { name: '高攀', age: '24', [Symbol()]: 'Symbol作为属性名'}
+* Symbol类型的key是不能通过Object.keys()或者for...in来枚举的，它未被包含在对象自身的属性名集合(property names)之中。所以，利用该特性，我们可以把一些不需要对外操作和访问的属性使用Symbol来定义。也正因为这样一个特性，当使用JSON.stringify()将对象转换成JSON字符串的时候，Symbol属性也会被排除在输出内容之外
+
+### 使用Symbol来替代常量
+```
+    let num1 = Symbol()
+    let num2 = Symbol()
+    num1 == num2 输出false
+```
+* 这样定义，直接就保证了三个常量的值是唯一的了！
+
+### 使用Symbol定义类的私有属性/方法
+
+### 注册和获取全局Symbol
+```
+    let gs1 = Symbol.for('global_symbol_1') //注册一个全局Symbol
+    let gs2 = Symbol.for('global_symbol_1') //获取全局Symbol
+```
+
+## 模板字符串
+
+### 合并数组
+```
+    var arr1 = [1, 2, 3]
+    var arr2 = [4, 5, 6]
+    var arr3 = [...arr1, ...arr2]
+    arr3 = [1, 2, 3, 4, 5, 6]
+```
+### 字符串转数组
+```
+    var str = "gaopan"
+    var arr = [...str]
+    arr = ["g", "a", "o", "p", "a", "n"]
+```
+
+### 合并对象
+* 对象的key一样，会出现数据项替换情况
+```
+    var obj1 = {name: '小明', age:24}
+    var obj2 = {name: '小红', age:23}
+    var obj3 = {...obj1, ...obj2}
+    obj3 = {name: "小红", age: 23}
+```
+* 如果对象的key不一样，则可以正常合并
+```
+    var obj4 = {test: 'key不同'}
+    var obj5 = {...obj1, obj4}
+    obj5 = {name: '小明', age:24, test: 'key不同'}
+```
+
 ## 深拷贝和浅拷贝
 * 对象拷贝主要是针对：原对象不变，改变新对象内的元素。
 * 浅拷贝：适用于只能改变对象内的一层。
