@@ -30,12 +30,12 @@ module.exports = {
                 'Other/git'
             ]
         }
-    // },
-    // configureWebpack: {
-    //     resolve: {
-    //         alias: {
-    //             '@img': 'images'
-    //         }
-    //     }
+    },
+    configureWebpack: {
+        resolve: {
+            alias: {
+                '@img': 'images'
+            }
+        }
     }
   }
