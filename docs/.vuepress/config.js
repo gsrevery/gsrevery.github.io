@@ -27,6 +27,7 @@ module.exports = {
                 'JavaScript/rule',
                 'JavaScript/QA-daily',
                 'JavaScript/node',
+                'JavaScript/css',
                 'Other/git'
             ]
         }

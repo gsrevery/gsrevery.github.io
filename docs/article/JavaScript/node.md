@@ -1,4 +1,4 @@
-# javascript常用方法
+# javascript常用方法 :basketball:
 
 ## ​判断复杂数据类型的方法
 ​

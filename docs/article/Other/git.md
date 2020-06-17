@@ -1,4 +1,4 @@
-# git的使用说明
+# git的使用说明 :heavy_check_mark:
 
 ## git的基本操作
 * git pull   //将线上仓库里面的代码拉到本地。
