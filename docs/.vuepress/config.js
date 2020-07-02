@@ -26,7 +26,7 @@ module.exports = {
             '/article/': [
                 'JavaScript/rule',
                 'JavaScript/QA-daily',
-                'JavaScript/node',
+                'JavaScript/method',
                 'JavaScript/css',
                 'JavaScript/EventLoop',
                 'Vue/Components',

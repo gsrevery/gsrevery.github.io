@@ -27,7 +27,7 @@
     JSON.parse(window.localStorage.getItem('goodsData'))
 
 ​
-## 三.for in循环遍历对象得到key和value
+## 三.for in循环遍历对象
 * 获取obj对象的key值
 ```
     for ( let a in obj) {
@@ -42,7 +42,7 @@
 ```
 
 ​
-## 四.for of循环遍历数组得到其中的数据项或者遍历字符串得到单个数据项
+## 四.for of循环遍历数组
 * 获取数组中的数据
 ```
     for (let data of arr) {
@@ -174,7 +174,7 @@
     // console.log(obj2)
 ```
 
-## 九.javascript中“=>”符号的意思
+## 九.=>符号的意思
 * =>是ES6语法中的arrow function
 * 举例：(x) => x + 6
 > 相当于：
