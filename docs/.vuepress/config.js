@@ -28,6 +28,8 @@ module.exports = {
                 'JavaScript/QA-daily',
                 'JavaScript/node',
                 'JavaScript/css',
+                'JavaScript/EventLoop',
+                'Vue/Components',
                 'Other/git'
             ]
         }

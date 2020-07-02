@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>事件循环机制 ❤️ | gp&#39;s blog</title>
+    <meta name="generator" content="VuePress 1.5.0">
+    
+    <meta name="description" content="学而时习之不亦说乎，有朋至远方来不亦乐乎。">
+    <link rel="preload" href="/blog/assets/css/0.styles.9305670d.css" as="style"><link rel="preload" href="/blog/assets/js/app.ac975f37.js" as="script"><link rel="preload" href="/blog/assets/js/2.964c91fa.js" as="script"><link rel="preload" href="/blog/assets/js/4.5737397d.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.6b3348e8.js"><link rel="prefetch" href="/blog/assets/js/11.a8ab8e97.js"><link rel="prefetch" href="/blog/assets/js/12.e2438e76.js"><link rel="prefetch" href="/blog/assets/js/13.800bd715.js"><link rel="prefetch" href="/blog/assets/js/3.5d72cbb6.js"><link rel="prefetch" href="/blog/assets/js/5.1a2f5bde.js"><link rel="prefetch" href="/blog/assets/js/6.cdcc097e.js"><link rel="prefetch" href="/blog/assets/js/7.7151e70c.js"><link rel="prefetch" href="/blog/assets/js/8.761d0eb4.js"><link rel="prefetch" href="/blog/assets/js/9.935fd3f0.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.9305670d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog/" class="home-link router-link-active"><!----> <span class="site-name">gp's blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/article/JavaScript/rule.html" class="nav-link">
+  Blog
+</a></div><div class="nav-item"><a href="/blog/aboutMe.html" class="nav-link">
+  Resume
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/blog/article/JavaScript/rule.html" class="nav-link">
+  Blog
+</a></div><div class="nav-item"><a href="/blog/aboutMe.html" class="nav-link">
+  Resume
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/blog/article/JavaScript/rule.html" class="sidebar-link">前端代码规范 👍</a></li><li><a href="/blog/article/JavaScript/QA-daily.html" class="sidebar-link">每日一题  💌</a></li><li><a href="/blog/article/JavaScript/node.html" class="sidebar-link">javascript常用方法 🏀</a></li><li><a href="/blog/article/JavaScript/css.html" class="sidebar-link">不常见的但实用的css 😁</a></li><li><a href="/blog/article/JavaScript/EventLoop.html" aria-current="page" class="active sidebar-link">事件循环机制 ❤️</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/EventLoop.html#执行栈和事件队列" class="sidebar-link">执行栈和事件队列</a></li><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/EventLoop.html#js异步加载" class="sidebar-link">js异步加载</a></li><li class="sidebar-sub-header"><a href="/blog/article/JavaScript/EventLoop.html#macro-task与micro-task" class="sidebar-link">macro task与micro task</a></li></ul></li><li><a href="/blog/article/Vue/Components.html" class="sidebar-link">组件之间传值 🥚</a></li><li><a href="/blog/article/Other/git.html" class="sidebar-link">git的使用说明 ✔️</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="事件循环机制"><a href="#事件循环机制" class="header-anchor">#</a> 事件循环机制 ❤️</h1> <h2 id="执行栈和事件队列"><a href="#执行栈和事件队列" class="header-anchor">#</a> 执行栈和事件队列</h2> <p>javascript代码在执行时会将不同的变量存储在内存中的不同位置：堆（heap）和栈（stack）中来加以区分。其中，堆里存放着一些对象。而栈中则存放着一些基础类型变量以及对象的指针。 但是我们这里说的执行栈和上面这个栈的意义却有些不同。</p> <h2 id="js异步加载"><a href="#js异步加载" class="header-anchor">#</a> js异步加载</h2> <p>js引擎遇到一个异步事件后并不会一直等待其返回结果，而是会将这个事件挂起，继续执行执行栈中的其他任务。当一个异步事件返回结果后，js会将这个事件加入与当前执行栈不同的另一个队列，我们称之为事件队列。被放入事件队列不会立刻执行其回调，而是等待当前执行栈中的所有任务都执行完毕， 主线程处于闲置状态时，主线程会去查找事件队列是否有任务。如果有，那么主线程会从中取出排在第一位的事件，并把这个事件对应的回调放入执行栈中，然后执行其中的同步代码...，如此反复，这样就形成了一个无限的循环。这就是这个过程被称为“事件循环（Event Loop）”的原因。</p> <img src="/blog/assets/img/event-loop.cc70141f.png" style="height:500px;min-width:100%;"> <h2 id="macro-task与micro-task"><a href="#macro-task与micro-task" class="header-anchor">#</a> macro task与micro task</h2> <p>异步任务被分成两类：宏任务（macro task） 微任务（micro task）
+宏任务：
+setInterval()
+setTimeout()
+微任务：
+new Promise()
+new MutaionObserver()</p> <p>在一个事件循环中，异步事件返回结果后会被放到一个任务队列中。然而，根据这个异步事件的类型，这个事件实际上会被对应的宏任务队列或者微任务队列中去。并且在当前执行栈为空的时候，主线程会 查看微任务队列是否有事件存在。如果不存在，那么再去宏任务队列中取出一个事件并把对应的回到加入当前执行栈；如果存在，则会依次执行队列中事件对应的回调，直到微任务队列为空，然后去宏任务队列中取出最前面的一个事件，把对应的回调加入当前执行栈...如此反复，进入循环。</p> <p>我们只需记住当<strong>当前执行栈执行完毕时会立刻先处理所有微任务队列中的事件，然后再去宏任务队列中取出一个事件。同一次事件循环中，微任务永远在宏任务之前执行。</strong></p> <p>这样就能解释下面这段代码的结果：</p> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code>    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span>reject</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">val</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p>输出结果为</p> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code>    <span class="token number">2</span>
+    <span class="token number">3</span>
+    <span class="token number">1</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/blog/article/JavaScript/css.html" class="prev">
+        不常见的但实用的css 😁
+      </a></span> <span class="next"><a href="/blog/article/Vue/Components.html">
+        组件之间传值 🥚
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/blog/assets/js/app.ac975f37.js" defer></script><script src="/blog/assets/js/2.964c91fa.js" defer></script><script src="/blog/assets/js/4.5737397d.js" defer></script>
+  </body>
+</html>
