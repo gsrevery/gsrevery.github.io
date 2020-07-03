@@ -30,6 +30,7 @@ module.exports = {
                 'JavaScript/css',
                 'JavaScript/EventLoop',
                 'Vue/Components',
+                'Vue/CrossDomain',
                 'Other/git'
             ]
         }
