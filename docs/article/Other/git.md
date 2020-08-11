@@ -60,6 +60,17 @@ git reflog  // 查看回退版本后仓库中消失的历史提交记录，适�
 >* git 修改当前的project的用户名的命令为：git config user.name 你的目标用户名。
 >* git 修改当前的project提交邮箱的命令为：git config user.email 你的目标邮箱名。
 
+## 将本地项目与远程仓库建立联系
+* git remote rm origin
+* git remote add origin git仓库地址
+* git pull origin 分支名
+* git add .
+* git commit -m "commit名"
+* git push origin 分支名
+
+## 本地分支与远程分支建立联系
+* git branch --set-upstream-to=origin/远程分支名 本地分支名
+
 
 ## git在拉取代码时的常见问题
 
