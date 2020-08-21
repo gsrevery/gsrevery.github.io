@@ -91,3 +91,14 @@ fatal: Exiting because of an unresolved conflict.
 ```
 > 解决办法
 * 回退版本
+
+## 在本地创建ssh密钥
+在 Git Bash下操作
+1. 先删除.ssh /known_hosts 文件
+2. 创建SSH Key
+* 加邮箱名的创建方式 $ ssh-keygen -t rsa -C "youremail@example.com"
+* 不加邮箱名的创建方式 $ ssh-keygen
+* 输入完毕后按回车，程序会要求输入一个密码，输入完密码后按回车会要求再确认一次密码，如果不想要密码可以在要求输入密码的时候按两次回次，表示密码为空，并且确认密码为空，此时[c盘>用户>自己的用户名>.ssh]目录下已经生成好了。
+3. 查看自己的密钥
+* 进入.ssh文件夹 cd ~/.ssh
+* 查看SSH Key cat id_rsa.pub
