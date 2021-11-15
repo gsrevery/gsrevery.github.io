@@ -11,6 +11,22 @@
         <span style="position: absolute; top: 50%; left: 2px; transform: translate(-50%, -50%); display: inline-block; width: 20px; height: 20px; border: 2px solid #2c3e50; border-radius: 50%;">
             <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; border: 1px solid #2c3e50; border-radius: 50%;"></span>
         </span>
+    　 RCEP原产地系统（内网）
+    </span>
+</h3>
+
+> RCEP原产地系统是中国和东盟10国和其他5国贸易海关所使用的产品。
+
+* 负责部分：签证管理，LODOP打印插件调研，前期插件下载，服务配置问题，并开发了一系列公共方法，为后期开发打印功能奠定了良好的技术基础。发票打印，申请书打印及20个证书套打。
+* 技术使用：采用了`vue+vue-router + vuex + axio`技术栈，使用了`LODOP`插件进行套打和打印；使用`webpack`自动化前端工作流，使用了`eslint`规范代码，使用了`iframe`嵌套实现微前端架构。
+
+
+
+<h3>
+    <span style="position: relative;">
+        <span style="position: absolute; top: 50%; left: 2px; transform: translate(-50%, -50%); display: inline-block; width: 20px; height: 20px; border: 2px solid #2c3e50; border-radius: 50%;">
+            <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; border: 1px solid #2c3e50; border-radius: 50%;"></span>
+        </span>
     　 安道通多式联运管理系统
     </span>
 </h3>
@@ -77,6 +93,7 @@
 * 熟练：能够熟练的使用vue.js,项目中主要 使用 vue 全家桶：vue-cli xuex vue-router axios， 
 理解MVVM开发思想。
 * 熟练：View UI及Element桌面端组件库。
+* 熟练：LODOP实现套打。
 * 熟练：Sass及Less Css预编译语言。 
 * 熟练：markdown文档编写标记语言。
 * 熟练：postcss-pxtorem进行移动端开发。

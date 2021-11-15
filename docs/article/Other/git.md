@@ -46,19 +46,21 @@ git reflog  // 查看回退版本后仓库中消失的历史提交记录，适�
 
 1. 首先查看全局配置：
 
->* git config  --list 
->* git config --local --list  
+* git config  --list 
+* git config --local --list  
 
 2. 修改全局
 * 如果你要修改当前全局的用户名和邮箱时，需要在上面的两条命令中添加一个参数，--global，代表的是全局。
 
->* git config  --global user.name 你的目标用户名。
->* git config  --global user.email 你的目标邮箱名。
+> git config  --global user.name 你的目标用户名。
+
+> git config  --global user.email 你的目标邮箱名。
 
 3. 修改当前的project
 
->* git 修改当前的project的用户名的命令为：git config user.name 你的目标用户名。
->* git 修改当前的project提交邮箱的命令为：git config user.email 你的目标邮箱名。
+> git 修改当前的project的用户名的命令为：git config user.name 你的目标用户名。
+
+> git 修改当前的project提交邮箱的命令为：git config user.email 你的目标邮箱名。
 
 ## 将本地项目与远程仓库建立联系
 * git remote rm origin
@@ -77,10 +79,23 @@ git reflog  // 查看回退版本后仓库中消失的历史提交记录，适�
 1. 问题1
 当你的开发进行到一半,但是代码还不想进行提交 ,然后需要同步去关联远端代码时.如果你本地的代码和远端代码没有冲突时,可以直接通过git pull解决.但是如果可能发生冲突怎么办.直接git pull会拒绝覆盖当前的修改.
 
-> 解决方法
+**解决方法**
+
+方法一：
 1. git stash    //将工作区的文件存到暂存区。
 2. git pull    //拉一下代码。
-3. git stash pop    //将暂存区的代码释放出去回到工作区。
+3. git stash pop    //将暂存区的代码释放出去回到工作区。这时候会出现冲突，解决冲突
+4. git add .
+5. git commit 
+6. git push
+
+方法二：
+1. git add .
+2. git commit // 先commit一下，但是不要推代码。
+3. git pull  // 这时候再拉一下代码，代码拉下来后会出现冲突，然后解决冲突。
+4. git add .  // 将解决冲突的代码添加进工作区
+5. git commit
+6. git push
 
 2. 问题2
 ```javascript
