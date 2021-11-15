@@ -7,8 +7,8 @@ module.exports = {
 	// base: '/blog/'  打包文件的基础路径，如果这里的blog改变，打包文件下的index.html页面的相关路径也会改变。
 	dest: './blog', 
 	base: '/blog/',
-	// head: ['link', { rel: 'icon', href: '/avator.jpg' }],
-	repo: 'https://gitee.com/gpzrm/Blog.git',
+    // head: ['link', { rel: 'icon', href: '/avator.jpg' }],
+	repo: 'https://github.com/gsrevery/gsrevery.github.io.git',
 	port: 1314,
 	markdown: {
         lineNumbers: true
