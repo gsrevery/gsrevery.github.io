@@ -32,6 +32,7 @@
                     <div class="title-box" @click="clickJump('项目重构优化')">项目重构优化</div>
                     <div class="title-box" @click="clickJump('vue问题')">vue问题</div>
                     <div class="title-box" @click="clickJump('路由')">路由</div>
+                    <div class="title-box" @click="clickJump('表格')">表格</div>
                 </div>
             </div>
         </div>
@@ -120,6 +121,9 @@ export default {
                 break;
                 case '路由':
                     window.location.href = `${window.location.origin}/blog/article/Vue/Router`
+                break;
+                case '表格':
+                    window.location.href = `${window.location.origin}/blog/article/Vue/Table`
                 break;
                 // other
                 case 'git操作':

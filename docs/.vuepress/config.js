@@ -66,6 +66,8 @@ module.exports = {
                 'Vue/Question',
                 // 路由
                 'Vue/Router',
+                // 表格
+                'Vue/Table',
                 // other
                 // git操作
                 'Other/Git',

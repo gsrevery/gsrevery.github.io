@@ -5,19 +5,34 @@
 
 **注意：在写接口时，需要写入类型`responseType: 'blob'`，不然会出现乱码的情况**
 ```js
-const dwnloadUrl = (res, name, text) => {
-    let blob = new Blob([res.data])
-    let fileName = name + (txt || '.xlsx')
-    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-        window.navigator.msSaveOrOpenBlob(blob, fileName)
-    } else {
-        let elink = doucument.createElement('a')
-        elink.downlod = flieName
-        elink.style.display = 'none'
-        elink.href = URL.createObjectURL(blob)
-        doucument.boby.appendChild(elink)
-        elink.click()
-        doucument.body.removeChild(elink)
-    }
+/*
+ * @param url下载地址, data请求参数, name文件名急后缀
+ * @description 文件下载 a标签
+ * @return file 对象下载
+ */
+
+export function aDownLoadBlob (url, data, fileName) {
+    axios({
+        method: 'post',
+        url: url,
+        data: data,
+        responseType: 'blob',
+        // token
+        headers: { Authorization: window.sessionStorage.getItem('accessToken') }
+    }).then(res => {
+        const blob = new Blob([res.data])
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveOrOpenBlob(blob, fileName)
+        } else {
+            const elink = document.createElement('a')
+            elink.setAttribute('download', fileName)
+            elink.style.display = 'none'
+            elink.href = URL.createObjectURL(blob)
+            document.body.appendChild(elink)
+            elink.click()
+            document.body.removeChild(elink)
+        }
+    })
 }
+
 ```
