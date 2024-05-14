@@ -1,6 +1,6 @@
 # javascript常用方法 :basketball:
 
-## 三.数据在本地存取的方式.
+## 数据在本地存取的方式.
 ​
 * 数据在本地sessionStorage中存取
 1. 存：
@@ -19,7 +19,7 @@
     JSON.parse(window.localStorage.getItem('goodsData'))
 
 ​
-## 四.for in循环遍历对象
+## for in循环遍历对象
 * 获取obj对象的key值
 ```js
     for ( let a in obj) {
@@ -35,7 +35,7 @@
 ```
 
 ​
-## 五.for of循环遍历数组
+## for of循环遍历数组
 * 获取数组中的数据
 ```js
     for (let data of arr) {
@@ -50,7 +50,7 @@
     }
 ```
 
-## 六.let 与 const的区别
+## let 与 const的区别
 * let声明的变量可以改变，值和类型都可以改变，没有限制。
 ```js
     let a = 10
@@ -65,7 +65,7 @@
     console.log(b) // 打印出来为 30
 ```
 
-## 七.Symbol的使用
+## Symbol的使用
 
 ### Symbol的特性
 Symbol是独一无二的
@@ -78,7 +78,7 @@ Symbol是独一无二的
 ```
 
 ### 使用Symbol来作为对象属性名(key)
-* let obj1 = { name: '高攀', age: '24', [Symbol()]: 'Symbol作为属性名'}
+* let obj1 = { name: '小白', age: '24', [Symbol()]: 'Symbol作为属性名'}
 * Symbol类型的key是不能通过Object.keys()或者for...in来枚举的，它未被包含在对象自身的属性名集合(property names)之中。所以，利用该特性，我们可以把一些不需要对外操作和访问的属性使用Symbol来定义。也正因为这样一个特性，当使用JSON.stringify()将对象转换成JSON字符串的时候，Symbol属性也会被排除在输出内容之外
 
 **设计一个对象，键名的类型包含一个Symbol类型，并实现遍历所有的key**
@@ -109,7 +109,7 @@ Reflect.ownKeys(product)
     let gs2 = Symbol.for('global_symbol_1') //获取全局Symbol
 ```
 
-## 八.模板字符串
+## 模板字符串
 
 ### 合并数组
 ```js
@@ -141,7 +141,7 @@ Reflect.ownKeys(product)
     obj5 = {name: '小明', age:24, test: 'key不同'}
 ```
 
-## 九.深拷贝和浅拷贝
+## 深拷贝和浅拷贝
 
 * 对象拷贝主要是针对：原对象不变，改变新对象内的元素。
 * 拷贝实现的原理: 在堆内存中另开一个内存空间，并改变其指针。
@@ -172,33 +172,84 @@ const obj2 = {...obj1}
 ```
 ```js
 // 对象赋值
-const obj1 = {name: '高攀', age: '23', num: [{one: '1', oneOne: {one: '11', two: '22', oneoneone: {one: '111', two: '222'}}}, {two: '2'}, {three: '3'}, {four: '4'}], money: {美元: '$', 人民币: '￥'}}
+const obj1 = {name: '小白', age: '23', num: [{one: '1', oneOne: {one: '11', two: '22', oneoneone: {one: '111', two: '222'}}}, {two: '2'}, {three: '3'}, {four: '4'}], money: {美元: '$', 人民币: '￥'}}
 const obj2 = obj1
 obj2.name = 'zrm'
 console.log(obj1)
 console.log(obj2)
 // 对象浅拷贝
-const obj1 = {name: '高攀', age: '23', num: [{one: '1', oneOne: {one: '11', two: '22', oneoneone: {one: '111', two: '222'}}}, {two: '2'}, {three: '3'}, {four: '4'}], money: {美元: '$', 人民币: '￥'}}
+const obj1 = {name: '小白', age: '23', num: [{one: '1', oneOne: {one: '11', two: '22', oneoneone: {one: '111', two: '222'}}}, {two: '2'}, {three: '3'}, {four: '4'}], money: {美元: '$', 人民币: '￥'}}
 const obj2 = {}
 Object.assign(obj2, obj1)
 obj2.name = 'gp'
 obj2.num[1].oneoneone = '000'
 
 // 对象浅拷贝
-const obj1 = {name: '高攀', age: '23', num: [{one: '1', oneOne: {one: '11', two: '22', oneoneone: {one: '111', two: '222'}}}, {two: '2'}, {three: '3'}, {four: '4'}], money: {美元: '$', 人民币: '￥'}}
+const obj1 = {name: '小白', age: '23', num: [{one: '1', oneOne: {one: '11', two: '22', oneoneone: {one: '111', two: '222'}}}, {two: '2'}, {three: '3'}, {four: '4'}], money: {美元: '$', 人民币: '￥'}}
 const obj2 = {...obj1}
 obj2.name = 'gp'
 console.log(obj1)
 console.log(obj2)
 // 对象深拷贝
-const obj1 = {name: '高攀', age: '23', num: [{one: '1', oneOne: {one: '11', two: '22', oneoneone: {one: '111', two: '222'}}}, {two: '2'}, {three: '3'}, {four: '4'}], money: {美元: '$', 人民币: '￥'}}
+const obj1 = {name: '小白', age: '23', num: [{one: '1', oneOne: {one: '11', two: '22', oneoneone: {one: '111', two: '222'}}}, {two: '2'}, {three: '3'}, {four: '4'}], money: {美元: '$', 人民币: '￥'}}
 const obj2 = JSON.parse(JSON.stringify(obj1));
 obj2.num[0].oneOne.oneoneone.two = '000'
 console.log(obj1)
 console.log(obj2)
 ```
+**手写浅拷贝**
+```js
+const obj1 = {name: '小白', age: '23'}
+const object = {}
+for(let key in obj1) {
+    object[key] = obj1[key]
+}
 
-## 十.=>符号的意思
+```
+**手写深拷贝**
+将对象/数组一层一层的分解，将其变成一个一个字符串，然后将其赋值给新的对象
+```js
+let obj = {
+    name: '小白',
+    age: '20',
+    six: '男',
+    test: {
+        one: '美元',
+        two: '人民币',
+        three: '欧元'
+    }
+}
+let data = depclone(obj)
+console.log(data, 'data')
+function depclone (val) {
+    // 对象
+    let object
+    if (val.constructor.name !== 'Array') {
+        object = {}
+        for(let key in val) {
+            if (typeof val[key] === 'object') {
+                object[key] = depclone(val[key])
+            } else {
+                object[key] = val[key]
+            }
+        }
+    }
+    // 数组
+    else {
+        object = []
+        for(let key in val) {
+            if (typeof val[key] === 'object') {
+                object[key] = depclone(val[key])
+            } else {
+                object.push(val[key])
+            }
+        }
+    }
+    return object
+}
+```
+
+## =>符号的意思
 * =>是ES6语法中的arrow function
 * 举例：(x) => x + 6
 > 相当于：
@@ -224,7 +275,10 @@ console.log(str3) // "abc; def"
 ```js
 let str1 = "abc;def"
 // g代表整个字符串，将str1中的";"全都换成"~"
+// 这种某些符号不行
 let str2 = str1.replace(/;/g,"~")
+// 这种都可以
+let str2 = str1.replace(new RegExp(';', 'g'), '~')
 console.log(str2) // "abc~def"
 ```
 
@@ -250,6 +304,29 @@ console.log(str2) // "d"
 // Eg2 更简单
 let str3 = str1[4]
 console.log(str3) // "d"
+```
+
+### indexOf()
+`indexOf`方法，判断字符串中是否包含某些字符，不会更改字符串；判断数组中是否存在某一项，不会更改数组。
+* 包含某字符时，返回该字符的下标（从0开始）
+* 不包含某些字段时，返回-1
+```js
+// 字符串
+let str = 'try@qq.com'
+let tryStr1 = str.indexOf('@')
+console.log(tryStr1) // 3
+let tryStr2 = str.indexOf('-')
+console.log(tryStr2) // -1
+
+// 数组
+let arr = ['小明', '今年', '20', '岁']
+let tryArr1 = arr.indexOf('20')
+console.log(tryArr1) // 2
+let tryArr2 = arr.indexOf('-')
+console.log(tryArr2) // -1
+
+// 一般配合着~使用
+if(~tryArr1) {}
 ```
 
 ## 三元运算符
@@ -329,4 +406,11 @@ var arr2 = Array from(obj)
 // 使用扩展运算符和Set，可以直接去除数组中重复数据
 var arr3 = [...new Set(arr1)]
 // arr3 打印出来 [1, 3, 5, 8]
+```
+
+## 光标显示在某个输入框内
+**注意**有可能UI框架的输入框加不上，使用普通输入框可行。
+```js
+var onFocus = document.querySelector('#form-username');
+onFocus.focus()
 ```

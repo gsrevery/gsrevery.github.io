@@ -36,3 +36,24 @@ export function aDownLoadBlob (url, data, fileName) {
 }
 
 ```
+
+## 页面懒加载
+后端接口查询压力过大时，或者页面渲染太慢，就可以使用页面懒加载来缓解压力。
+
+```js
+<div class="ytxd-all" @scroll="rollFn()"></div>
+
+// 滚动条事件
+rollFn() {
+    //滚动条距离底部的距离  scrollHeight是整个可滚动的高度，scrollTop是滚动条距离顶部的高度，clientHeight是div的可视高度
+    //当滚动条距离底部加载新数据
+    if(event.target.scrollHeight <= Math.ceil(event.target.scrollTop + event.target.clientHeight)){
+        this.page++
+        //在加载完最后一页的数据时停止加载
+        if(this.totalPages >= this.page){
+            //调数据的方法，在此省略
+            this.clickSearch('gundong')
+        }
+    }
+}
+```

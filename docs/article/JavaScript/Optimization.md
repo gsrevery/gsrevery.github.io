@@ -15,3 +15,16 @@ anchor(idName) {
     document.querySelector(idName).scrollIntoView({ behavior: 'smooth' })
 }
 ```
+
+## 滚动条优化
+```css
+/*滚动条*/
+/* 修改滚动条 */
+::-webkit-scrollbar-thumb {
+    background: white;
+}
+/* 修改滚动条轨道 */
+::-webkit-scrollbar-track {
+    background: red;
+}
+```

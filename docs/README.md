@@ -2,5 +2,5 @@
 home: true
 heroImage: /avator.jpg
 actionText: 😊 Get More →
-actionLink: /Home
+actionLink: /article/JavaScript/Rule
 ---

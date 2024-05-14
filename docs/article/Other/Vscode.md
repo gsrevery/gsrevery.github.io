@@ -52,3 +52,15 @@
 ## markdown
 
 * 点击右上角的预览按钮或者`ctrl+shift+v`，在写markdown的同时就能预览页面。
+
+## 常用设置
+### 打开文件另起一个tab页签
+在`settings.json`文件下进行如下配置
+```js
+"workbench.editor.enablePreview": false
+``` 
+### vscode中配置git管理
+```js
+// 配置git
+"terminal.integrated.shell.windows": "D:/gdp/git/Git/bin/bash.exe",
+```

@@ -1,6 +1,6 @@
 # 不常见的但实用的css :grin:
 
-## :last-child选择器
+## last-child选择器
 *  在使用循环时，需要给循环出来的最后一个元素添加css样式时很有帮助
 * Eg1: 指定父元素中最后一个p元素的背景色：
 ```
@@ -11,7 +11,7 @@ p:last-child
 ```
 * Eg2: 去掉tab切换后面多余的“/”
 
-<img src="../../../images/javascript/css1.jpg" height="60">
+<img src="../../../images/css/css1.jpg" height="60">
 
 #### 代码
 
@@ -141,3 +141,27 @@ export default {
     white-space: pre-wrap;
 }
 ```
+
+## 盒子模型
+
+### 盒子模型换行
+盒子模型中——子元素按照给定宽度横向排列，如果累积宽度超出父元素宽度则自动换行展示。
+```css
+.f-box {
+    display:flex;
+    flex-wrap: wrap;
+    width: 300px
+}
+.s-box {
+    width: 100px;
+}
+```
+
+## 文本
+```css
+/* 设置文字之间的间隔为2px */
+letter-spacing: 2px;
+
+/* 设置首行缩进2个字符 */
+text-indent: 2ch;
+``

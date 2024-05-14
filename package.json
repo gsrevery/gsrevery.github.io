@@ -8,5 +8,8 @@
   "scripts": {
     "dev": "vuepress dev docs",
     "build": "vuepress build docs"
+  },
+  "dependencies": {
+    "vuepress": "^1.9.9"
   }
 }

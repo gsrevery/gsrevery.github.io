@@ -243,3 +243,4 @@ var arr = Array.from(obj)
 ### toJSON()方法
 
 ### valueOf()方法
+```

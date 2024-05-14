@@ -197,6 +197,16 @@ arr.reverse() // 返回[7, 6, 3, 2, 1]
 arr // [7, 6, 3, 2, 1]
 ```
 
+### at()
+Array.at()方法，可以快速定位到数组的最后一项或者倒数第二项
+```js
+var arr = [1, 2, 3, 6, 7]
+arr.at(1) // 返回[2]
+arr.at(0) // 返回[1]
+arr.at(-1) // 返回[7]
+arr.at(-2) // 返回[6]
+```
+
 ### sort()
 Array.sort()方法将数组中的元素排序并返回排序后的数组。当不带参数调用sort()时，数组元素以字母表顺序排序（如有必要将临时转化为字符串进行比较):
 ```js
@@ -248,6 +258,76 @@ arr.slice(-3, -2)  // 返回[3]
 
 ```
 toLocaleString()是toString()方法的本地化版本。它调用元素的toLocalestring()方法将每个数组元素转化为字符串，并且使用本地化（和自定义实现的）分隔符将这些字符串连接起来生成最终的字符串。
+
+### Object.groupBy()方法
+`Object.groupBy()` 方法是一项2024新添加的功能，允许我们按照特定属性将数组中的对象分组，从而使数据处理变得更加容易。
+```js
+const arr = [
+  { gender: '男', name: '小光' },
+  { gender: '女', name: '小白' },
+  { gender: '男', name: '小王' }
+];
+
+const res = Object.groupBy(arr, item => item.gender);
+console.log(res)
+// 输出:
+// {
+//   女: [{ gender: '女', name: '小白' }]
+//   男: [{ gender: '男', name: '小光' }, { gender: '男', name: '小王' }],
+// }
+
+
+// 如果不使用`Object.groupBy()`方法，可以通过如下方式处理，该方法可以进行多属性分类，是`Object.groupBy()`不具备的。
+// keys可以传一个数组
+// 根据传入数组的值进行数据筛选分类
+function _sortPro(array, keys = []) {
+    var c = [];
+    var d = {};
+    for (var element of array) {
+        let elementkeyStr = ''
+        let elementKey = []
+        let elementkeyObj = {}
+        for (var key of keys) {
+            elementKey.push(element[key]);
+            elementkeyObj[key] = element[key];
+        }
+        elementkeyStr = elementKey.join('_');
+        if (!d[elementkeyStr]) {
+            c.push({
+                ...elementkeyObj,
+                children: [element]
+            });
+            d[elementkeyStr] = element;
+        } else {
+            for (var ele of c) {
+                let isTrue = keys.some(key => {
+                    return ele[key] !== element[key];
+                });
+                if (!isTrue) {
+                    ele.children.push(element);
+                }
+            }
+        }
+    }
+    return c;
+}
+const arr = [
+  { gender: '男', name: '小光' },
+  { gender: '女', name: '小白' },
+  { gender: '男', name: '小王' }
+];
+const arr1 = _sortPro(arr, ['gender'])
+console.log(arr1)
+// 输出:
+// [{
+//     children: [{ gender: '女', name: '小白' }],
+//     gender: '女'
+// },
+// {
+//     children: [{ gender: '男', name: '小光' }, { gender: '男', name: '小王' }],
+//     gender: '男'
+// }]
+```
 
 ## 数组类型
 给定一个未知的对象，判定它是否为数组通常非常有用。在ECMAScript 5中，可以使用Array.isArray()函数来判断
