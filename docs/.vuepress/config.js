@@ -8,7 +8,7 @@ module.exports = {
 	dest: './blog', 
 	base: '/blog/',
     // head: ['link', { rel: 'icon', href: '/avator.jpg' }],
-	repo: 'git@github.com:gsrevery/gsrevery.github.io.git',
+	repo: 'https://github.com/gsrevery/gsrevery.github.io.git',
 	port: 1314,
 	markdown: {
         lineNumbers: true

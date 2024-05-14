@@ -2,7 +2,7 @@
   "name": "gp.blog",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:gsrevery/gsrevery.github.io.git",
+  "repository": "https://github.com/gsrevery/gsrevery.github.io.git",
   "author": "gaopan <1780171054@qq.com>",
   "license": "MIT",
   "scripts": {
