@@ -72,7 +72,7 @@
                 </Col>
                 <Col class="center" span="3"><Input v-model.trim="item.num" /></Col>
                 <Col class="center" span="3"><Input v-model.trim="item.price" /></Col>
-                <Col class="center" span="3">{{ `${item.num * item.price}` || '' }}</Col>
+                <Col class="center" span="3"><Input v-model.trim="item.price" /></Col>
                 <Col class="center" span="7"><Input v-model.trim="item.remark" /></Col>
                 <Icon class="add-icon" type="ios-add-circle-outline" @click="addBill(id)" />
                 <Icon class="remove-icon" type="ios-remove-circle-outline" @click="removeBill(id)" />

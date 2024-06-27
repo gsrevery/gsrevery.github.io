@@ -146,10 +146,22 @@ export default {
                     <div class="html2pdf__page-break page-one">
                         <h1>项目经理责任书1</h1>
                         <p class="row-one">项目经理: {{ '小明' }}</p>
+                        <p class="row-two">{{ `在公司规定的实施成本2000000元（包含风险保障金200000'元、运维计划成本300000元）内，使用公司认可的技术路线、实施方法，按期完成合同规定的项目交付工作，实施成本盈余部分由项目经理全权负责分配。` }}</p>
+                        <p class="row-three">参考资料:《xxx项目经理包干制管理制度》《xxx项目经理包干制实施模板》</p>
+                        <p class="row-four">项目经理:</p>
+                        <p class="row-five">项目管理办公室:</p>
+                        <p class="row-six">财务办公室:</p>
+                        <p class="row-seven">签订日期:</p>
                     </div>
                     <div class="html2pdf__page-break page-one">
                         <h1>项目经理责任书2</h1>
-                        <p class="row-one">项目经理: {{ '小红' }}</p>
+                        <p class="row-one">项目经理: {{ '小明' }}</p>
+                        <p class="row-two">{{ `在公司规定的实施成本2000000元（包含风险保障金200000元、运维计划成本300000元）内，使用公司认可的技术路线、实施方法，按期完成合同规定的项目交付工作，实施成本盈余部分由项目经理全权负责分配。` }}</p>
+                        <p class="row-three">参考资料:《xxx项目经理包干制管理制度》《xxx项目经理包干制实施模板》</p>
+                        <p class="row-four">项目经理:</p>
+                        <p class="row-five">项目管理办公室:</p>
+                        <p class="row-six">财务办公室:</p>
+                        <p class="row-seven">签订日期:</p>
                     </div>
                 </section>
             </html2pdf>
