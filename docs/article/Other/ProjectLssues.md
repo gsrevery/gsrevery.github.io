@@ -290,3 +290,40 @@ yarn add crypto-js
       return encrypted.toString(CryptoJS.enc.Utf8).toString()
   }
 ```
+
+## qiankun框架，子应用找不到资源问题
+在本地主应用和子应用同时运行着，通过主应用访问子应用时提示资源找不到，这个时候可以看一下子应用是否使用的是路由懒加载，如果是请先改为普通路由后再试
+```js
+// 路由懒加载
+export default [
+    {
+        path: '/home',
+        name: 'home',
+        props: route => ({
+            redirect: route.query.redirect
+        }),
+        meta: {
+            title: '首页',
+            authCode: null
+        },
+        component: () => import('@/pages/home/Index.vue')
+    }
+]
+
+// 改为普通路由
+import Home from '@/pages/home/Index.vue'
+export default [
+    {
+        path: '/home',
+        name: 'home',
+        props: route => ({
+            redirect: route.query.redirect
+        }),
+        meta: {
+            title: '首页',
+            authCode: null
+        },
+        component: Home
+    }
+]
+```

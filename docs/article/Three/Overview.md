@@ -122,6 +122,10 @@ light
         let edgesMtl = new THREE.LineBasicMaterial({ color: ‘red’})  // 创建基础线条材质
         let border = new THREE.LineSegments(cylinderEdges, edgesMtl);  //  创建线框
         cube.add(border );   // 将线框加入几何体中
+    
+    不规则模型（Shape）
+        先使用Shape创建一个不规则平面（使用点到点连线）
+        再将平面加厚则可以得到一个不规则模型
 
 创建模型mesh
 

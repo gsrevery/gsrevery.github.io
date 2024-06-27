@@ -150,6 +150,10 @@ module.exports = {
                         path: '/article/Other/Git'
                     },
                     {
+                        title: 'canvas',
+                        path: '/article/Other/Canvas'
+                    },
+                    {
                         title: 'lodop插件',
                         path: '/article/Other/LODOP'
                     },
