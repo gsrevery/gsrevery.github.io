@@ -154,6 +154,10 @@ module.exports = {
                         path: '/article/Other/Canvas'
                     },
                     {
+                        title: 'qiankun',
+                        path: '/article/Other/Qiankun'
+                    },
+                    {
                         title: 'lodop插件',
                         path: '/article/Other/LODOP'
                     },
