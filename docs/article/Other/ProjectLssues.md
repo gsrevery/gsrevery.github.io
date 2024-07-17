@@ -290,3 +290,76 @@ yarn add crypto-js
       return encrypted.toString(CryptoJS.enc.Utf8).toString()
   }
 ```
+
+## sm加密
+sm加密又叫国密加密，前端可以通过插件`sm-crypto`去实现，分为sm2、sm3、sm4，今天我们主要说一下sm3
+
+sm3不可解密加密
+
+### 插件安装
+```
+// yarn安装
+yarn add sm-crypto
+// npm安装
+npm install --save sm-crypto
+```
+
+### 插件引用
+```js
+// 插件引用
+import { SM3 } from 'sm-crypto'; // 这样使用可能在代码中使用SM3报undefined
+
+// 转换时直接使用，这样可以避免上面的问题
+const SM3 = require('sm-crypto').sm3
+let passWord = SM3('zheshimima123')
+```
+
+## 前端发布代码后需要强刷浏览器
+### 场景
+前端在发布代码后，不强刷页面或者清理缓存刷新页面，无法获取最新的代码页面。
+
+### 原因
+这个和浏览器的缓存机制有关系了，浏览器缓存是为了节约网络的资源加速浏览，浏览器在用户磁盘上对最近请求过的文档进行存储，当访问者再次请求这个页面时，浏览器就可以从本地磁盘显示文档，这样就可以加速页面的阅览。
+
+### 解决方案
+#### 方案一：添加动态版本号
+使用 Vue 脚手架的情况下：vue.config.js，在打包时给css文件和js文件后加上时间戳。
+```js
+const timeStamp = new Date().getTime()
+module.exports = {
+  filenameHashing: false, // 打包的时候不使用 hash 值，因为后面自行添加时间戳或者版本号了
+  configureWebpack: {
+    output: {
+      // 打包编译后的js文件名称,添加时间戳.
+      filename: `js/js[name].${timeStamp}.js`,
+      chunkFilename: `js/chunk.[id].${timeStamp}.js`
+    },
+  },
+  css: {
+    extract: { // 打包后css文件名称添加时间戳
+      filename: `css/[name].${timeStamp}.css`,
+      chunkFilename: `css/chunk.[id].${timeStamp}.css`
+    }
+  }
+}
+```
+
+#### 方案二：在 index.html 页面加 meta 标签
+program、cache-control 和 expires 都是前端缓存的关键字段，优先级是 pragma > cache-control > expires，pragma 是旧产物，已经逐步抛弃，有些网站为了向下兼容还保留了这个字段。
+```html
+<meta http-equiv="pragram" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="expires" content="0">
+```
+
+#### 方案三：后端 nginx 配置，让 index.html 不缓存
+vue 默认配置，打包后 css 和 js 的名字后面都加了哈希值，不会有缓存问题，但是 index.html 在服务器端可能是有缓存的，需要在服务器配置不让缓存 index.html。
+
+no-cache, no-store可以只设置一个，也可以两个都设置
+* no-cache浏览器会缓存，但刷新页面或者重新打开时 会请求服务器，服务器可以响应304，如果文件有改动就会响应200
+* no-store浏览器不缓存，刷新页面需要重新下载页面
+```
+location = /index.html {
+  add_header Cache-Control "no-cache, no-store";
+}
+```
