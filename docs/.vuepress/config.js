@@ -118,6 +118,10 @@ module.exports = {
                         path: '/article/Vue/Question'
                     },
                     {
+                        title: '文件处理',
+                        path: '/article/Vue/FileHandle'
+                    },
+                    {
                         title: '路由',
                         path: '/article/Vue/Router'
                     },
