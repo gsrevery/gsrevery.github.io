@@ -214,7 +214,7 @@ download() {
 ```
 
 ### 返回流文件下载
-后端用接口将文件通过流的方式给前端
+后端用接口将文件通过流的方式给前端，文件太大，下面这种方式可能不合适（下载的文件会先存在浏览器中，然后再下载到本地）——待验证
 ```js
 // 下载文件get
 export const downloadRequest = (url, { path = {}, data = {} } = {}) => {
@@ -296,5 +296,84 @@ export const downloadPostRequest = (url, { path = {}, data = {} } = {}) => {
     }).catch((err) => {
         console.log(err);
     })
+}
+```
+
+## 大文件上传
+文件太大，比如视频（几百兆，几个G之类）上传时，需要切片上传
+
+需要考虑的点有：
+* 1. 网络问题导致上传中断的继续上传，可以考虑记录所有切片的`hash`值/排序和每个上传成功切片的`hash`值/序号，网络重连之后，对比继续上传，后端接收完成后，按照`hash`值/排序值，将文件组合起来储存。
+* 2. 切片过多时，单个切片上传同样耗费时间，可以考虑使用`webworker`进行并行上传。
+
+下面是大文件上传实例，未实现上述问题，后续项目中遇到继续补充。
+```js
+import md5 from 'js-md5' //引入MD5加密
+import axios from 'axios'
+export const uploadByPieces = ({ randoms, file, pieceSize = 2, progress, success, error }) => {
+    // 如果文件传入为空直接 return 返回
+    if (!file) return
+    let fileMD5 = ''// 总文件列表
+    const chunkSize = pieceSize * 1024 * 1024 // 5MB一片
+    const chunkCount = Math.ceil(file.size / chunkSize) // 总片数
+    // 获取md5
+    const readFileMD5 = () => {
+        // 读取视频文件的md5
+        console.log("获取文件的MD5值")
+        let fileRederInstance = new FileReader()
+        fileRederInstance.readAsBinaryString(file)
+        fileRederInstance.addEventListener('load', e => {
+            let fileBolb = e.target.result
+            fileMD5 = md5(fileBolb)
+            //   console.log('fileMD5', fileMD5)
+            //   console.log("文件未被上传，将分片上传")
+            readChunkMD5()
+        })
+    }
+    const getChunkInfo = (file, currentChunk, chunkSize) => {
+        let start = currentChunk * chunkSize
+        let end = Math.min(file.size, start + chunkSize)
+        let data = file.slice(start, end)
+        let chunk = new File([data], file.name, { type: file.type, lastModified: Date.now() });
+        return { start, end, chunk }
+    }
+    // 针对每个文件进行chunk处理
+    const readChunkMD5 = async () => {
+        // 针对单个文件进行chunk上传
+        for (let i = 0; i < chunkCount; i++) {
+            const { chunk } = getChunkInfo(file, i, chunkSize)
+            // console.log("总片数" + chunkCount)
+            // console.log("分片后的数据---测试：" + i)
+            await uploadChunk({ chunk, currentChunk: i, chunkCount }).then(data => {
+                if (i+1 === chunkCount) {
+                    success(data)
+                }
+            })
+        }
+    }
+    const uploadChunk = (chunkInfo) => {
+        return new Promise((resolve, reject) => {
+            let formData = new FormData()
+            formData.append('identifier', fileMD5)
+            formData.append('chunkNumber', chunkInfo.currentChunk + 1)
+            formData.append('chunkSize', chunkSize)
+            formData.append('file', chunkInfo.chunk)
+            formData.append('totalChunks', chunkInfo.chunkCount)
+            axios({
+                url: `/api/system/file/fastDfsChunkUpload`,
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: sessionStorage.getItem('accessToken') || ''
+                },
+                data: formData
+            }).then(({ data }) => {
+                resolve(data)
+            }).catch(err => {
+                reject(err);
+            })
+        })
+    }
+    readFileMD5() // 开始执行代码
 }
 ```
