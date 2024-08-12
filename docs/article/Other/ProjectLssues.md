@@ -94,7 +94,9 @@ FATAL ERROR: CALL_AND_RETRY_LAST Allocation failed - JavaScript heap out of memo
 
 ## 项目安装依赖时候常见问题以及解决思路
 
-### 由于国内外环境因素，导致npm包下载不完整或者出错中断
+### 环境问题
+**由于国内外环境因素，导致npm包下载不完整或者出错中断**
+
 可以通过修改npm包的镜像源的方式，加速依赖包下载的速度，来避免这种问题
 
 **npm设置源**
@@ -108,10 +110,14 @@ FATAL ERROR: CALL_AND_RETRY_LAST Allocation failed - JavaScript heap out of memo
 * 设置淘宝源 yarn config set registry http://registry.npm.taobao.org/
 * 切换默认源 yarn config set registry https://registry.yarnpkg.com
 
-### 由于node版本和node.sass版本不匹配导致出错中断
+### 版本问题
+**由于node版本和node.sass版本不匹配导致出错中断**
+
 对照上文中`node版本与node-sass版本兼容`解决
 
-### 项目其他人安装依赖都正常，到你安装依赖时出错
+### 其他问题
+**项目其他人安装依赖都正常，到你安装依赖时出错**
+
 其他人安装依赖都没啥问题，就你安装出错，检查node版本也没啥问题，这个时候你就开始有点莫名其妙了，到这里了先不要慌，三种方案帮你解决。
 
 **方案一.删除node modules文件**
@@ -145,7 +151,9 @@ yarn命令: yarn cache clean --force
 yarn config set "strict-ssl" false -g
 ```
 
-### error commander@11.1.0: The engine "node" is incompatible with this module
+### 如下报错
+**error commander@11.1.0: The engine "node" is incompatible with this module**
+
 完整的报错情况如下：
 <img src="../../../images/other/install-error.jpg" style="height:100%; width: 100%">
 
@@ -157,7 +165,9 @@ yarn config set ignore-engines true
 ```
 错误忽略成功后，再`yarn install`安装依赖就可以了
 
-## 网站测试环境首页加载正常，发布到线上加载很慢或者加载不出首页
+## 系统首页加载缓慢
+
+### 资源与配置不匹配
 场景：有一天销售小姐姐突然跑过来跟我反馈，我们系统的首页加载好慢好慢，要十秒左右才能加载完成。
 
 问题排查：第一步查看首页资源请求，是那个资源响应时间需要这么长时间（之前都是好好的，不可能无缘无故突然就变慢了），然后不看不知道一看吓一跳，居然是前几天更新的内容`three.js`包卡卡住了，
@@ -166,6 +176,106 @@ yarn config set ignore-engines true
 2. F12调开控制台，查看页面请求总资源是否和nginx内配置的client `max body size 50m;`页面请求最大总资源匹配，如果不匹配需要修改。
 
 <img src="../../../images/other/页面加载资源.png" style="width: 100%">
+
+### Gzip压缩
+web上使用gzip编码格式传输有几个要点：
+* 1. 浏览器和服务器都需要支持gzip编码（所有浏览器都支持）
+* 2. 采用 LZ77 算法与 Huffman 编码来压缩文件，是一种无损压缩算法
+* 3. 压缩比率在3-10倍左右（纯文本），可以大大节省服务器的网络带宽
+
+#### 使用注意事项
+* 1. html、js、css使用gzip压缩
+* 2. 图片资源不需要Gzip压缩
+原因：gzip使用的`Deflate`算法，因为它使用了`LZ77`算法与`Huffman`编码来压缩文件，重复度越高的文件可压缩的空间就越大，但是图片的重复度是很低的，甚至压缩后页面的体积会变大，得不偿失
+
+#### Gzip的压缩原理
+<img src="../../../images/other/projectLssues_gzip_one.png" style="width: 100%">
+
+* 1. 浏览器请求url，并在请求头中设置属性accept-encoding: gzip。这表明该浏览器是支持gzip，该参数浏览器在请求资源时会自动带上。
+* 2. 服务器在接收到浏览器发送的请求之后，服务器会返回压缩后的文件，并在响应头重包含content-encoding: gzip。若是没有gzip文件，会返回为压缩的文件。
+* 3. 浏览器接收到服务器的响应之后，根据content-encoding: gzip响应头使用gzip策略解压压缩后的资源，通过content-type内容类型决定怎么编码读取该文件内容。
+
+#### 开启Gzip压缩的方案
+##### 第一步：前端预生成gz文件
+前端工程项目可以在打包的时候，前端使用webpack或vite打包工作，生成gz文件。这样的目的是减少在服务器在线生成gzip的步骤。
+
+使用webpackg构建代码如下：
+```js
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+
+module.exports = {
+  // ...其他配置
+  plugins: [
+    // 压缩文件
+    new CompressionWebpackPlugin({
+      test: /\.js$|\.html$|\.css$/,
+      // 超过4kb压缩
+      threshold: 4096
+    }),
+  ],
+};
+```
+
+使用vite构建代码如下：
+```js
+import compressPlugin from 'vite-plugin-compression';
+
+export default defineConfig({
+  plugins: [
+    compressPlugin({
+      ext: '.gz',
+      algorithm: 'gzip',
+      deleteOriginFile: false,
+    }),
+  ],
+})
+```
+
+#### 第二步：服务器在线Gzip压缩（nginx）
+nginx配置来阐述流程，以下是nginx的配置属性
+
+nginx配置代码如下：
+
+1. 静态加载本地的gz文件
+```js
+// 静态加载本地的gz文件，需要在nginx上安装http_gzip_static_module模块
+gzip_static on;
+
+```
+
+2. 两种方式结合的配置
+
+有gz文件的时候使用静态资源，不存在gz文件的时候进行在线压缩而不是加载源文件，需要在nginx上把两种配置都写上。
+```
+  # 开启gzip
+  gzip on;
+
+  # 启用gzip压缩的最小文件；小于设置值的文件将不会被压缩
+  gzip_min_length 1k;
+
+  # gzip 压缩级别 1-10
+  gzip_comp_level 2;
+
+  # 进行压缩的文件类型。
+
+  gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/javascript application/x-httpd-php;
+
+  # 是否在http header中添加Vary: Accept-Encoding，建议开启
+  gzip_vary on;
+```
+
+gzip_static的优先级高，会先加载静态gz文件，当同目录下不存在此文件的时候，会执行在线压缩命令。
+
+#### 查看gzip开启状态
+开启前：
+<img src="../../../images/other/projectLssues_gzip_two.jpg" style="width: 100%">
+<img src="../../../images/other/projectLssues_gzip_three.jpg" style="width: 100%">
+开启后：
+
+Etag中只有简单字符表示静态资源加载，而前面带 W/ 表示启动了在线压缩。
+<img src="../../../images/other/projectLssues_gzip_four.jpg" style="width: 100%">
+<img src="../../../images/other/projectLssues_gzip_five.jpg" style="width: 100%">
+
 
 ## 研发中node_modules依赖包越来越大
 之前没有感觉，直到一次，我的磁盘突然变红了，我很奇怪，这个工作盘都没多少东西啊，怎么突然就慢了，结果一分析，项目中的依赖包居然达到了`20+G`让我很吃惊，这是怎么回事呢？不懂咱就百度传送门：[https://zhuanlan.zhihu.com/p/646026688]，发现前端项目在每次启动的时候，都会去执行在`node_modules`中累计`.cache`

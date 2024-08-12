@@ -76,10 +76,6 @@ module.exports = {
                         path: '/article/JavaScript/This'
                     },
                     {
-                        title: '不常见的但实用的css',
-                        path: '/article/JavaScript/Css'
-                    },
-                    {
                         title: '事件循环机制',
                         path: '/article/JavaScript/EventLoop'
                     },
@@ -94,6 +90,16 @@ module.exports = {
                     {
                         title: '数据特殊处理',
                         path: '/article/JavaScript/CommonlyMethod'
+                    }
+                ]
+            },
+            {
+                title: 'css',
+                collapsable: false,
+                children: [
+                    {
+                        title: 'css',
+                        path: '/article/Css/Css'
                     }
                 ]
             },

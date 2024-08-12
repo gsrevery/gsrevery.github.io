@@ -93,3 +93,146 @@
 	</script>
 </html>
 ```
+
+## canvas绘制矩形并拖动
+
+**实现思路：**
+* 1.绘制一个canvas作为绘制矩形并拖动区域。
+* 2.捕获鼠标点击事件(绘制和拖动都需要点击事件，这里我们需要判断当前操作类型，点击区域有绘制的矩形为拖动反之则绘制矩形)
+* 3.捕获鼠标移动事件(实时获取坐标，操作类型为拖动，则改变矩形的坐标位置；操作类型为绘制矩形，则实时绘制矩形)
+* 4.捕获鼠标松开事件(同移动事件)
+
+实现代码如下：
+```html
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Title</title>
+		<link rel="stylesheet" href="./style.css">
+	</head>
+	
+	<style>
+		body{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+		}
+		canvas {
+			margin: 50px;
+			background-color: #b1b3b8;
+		}
+	</style>
+
+	<body>
+		<input type="color">
+		<canvas></canvas>
+	</body>
+	
+	<script>
+		console.log(devicePixelRatio)
+		// 原始尺寸 = 样式尺寸 * 缩放倍率
+		const canvas = document.querySelector('canvas') // 画布
+		const colorPicker = document.querySelector('input') // 颜色选择器
+		const ctx = canvas.getContext('2d')// 2d绘图环境
+		function init() {
+			const w = 500 // 画布宽度
+			const h = 300 // 画布高度
+			canvas.width = w * devicePixelRatio
+			canvas.height = h * devicePixelRatio
+			canvas.style.width = w + 'px'
+			canvas.style.height = h + 'px'
+		}
+		init()
+		const shapes = []
+		class Rectangle {
+			constructor(color, startX, startY) {
+				this.color = color
+				this.startX = startX
+				this.startY = startY
+				this.endX = startX
+				this.endY = startY
+			}
+		
+			get minX() {
+				return Math.min(this.startX, this.endX)
+			}
+		
+			get minY() {
+				return Math.min(this.startY, this.endY)
+			}
+		
+			get maxX() {
+				return Math.max(this.startX, this.endX)
+			}
+		
+			get maxY() {
+				return Math.max(this.startY, this.endY)
+			}
+		
+			draw(ctx) {
+				ctx.beginPath()
+				ctx.moveTo(this.minX * devicePixelRatio, this.minY * devicePixelRatio)
+				ctx.lineTo(this.maxX * devicePixelRatio, this.minY * devicePixelRatio)
+				ctx.lineTo(this.maxX * devicePixelRatio, this.maxY * devicePixelRatio)
+				ctx.lineTo(this.minX * devicePixelRatio, this.maxY * devicePixelRatio)
+				ctx.lineTo(this.minX * devicePixelRatio, this.minY * devicePixelRatio)
+				ctx.fill()
+				ctx.fillStyle = this.color
+				ctx.strokeStyle = '#fff'
+				ctx.lineCap = 'square'
+				ctx.lineWidth =  2* devicePixelRatio
+				ctx.stroke()
+			}
+		
+		}
+		
+		canvas.onmousedown= e => {
+			console.log(e.offsetX, e.offsetY)
+			const bounding = canvas.getBoundingClientRect()
+			const rect = new Rectangle(colorPicker.value, e.offsetX, e.offsetY)
+			const shape = getShape(e.offsetX, e.offsetY)
+			if(shape){
+				const { startX, startY,endX,endY} = shape
+				const mouseX = e.offsetX
+				const mouseY = e.offsetY
+				window.onmousemove = e => {
+					const distX = e.clientX - bounding.left - mouseX
+					const distY = e.clientY - bounding.top - mouseY
+					shape.startX = startX + distX
+					shape.startY = startY + distY
+					shape.endX = endX + distX
+					shape.endY = endY + distY
+				}
+				console.log('拖动')
+			} else {
+				shapes.push(rect)
+				window.onmousemove = e => {
+					rect.endX = e.clientX - bounding.left
+					rect.endY = e.clientY - bounding.top
+		
+				}
+			}
+		
+			window.onmouseup = () => {
+				window.onmousemove = null
+				window.onmouseup = null
+			}
+		}
+		function draw() {
+			requestAnimationFrame(draw)
+			ctx.clearRect(0, 0, canvas.width, canvas.height) // 清空画布
+			shapes.forEach(item => {
+				item.draw(ctx)
+			})
+		}
+		draw()
+		function getShape(x,y) {
+			return shapes.find(item => {
+				return item.minX <= x && item.maxX >= x && item.minY <= y && item.maxY >= y
+			})
+		}
+	</script>
+</html>
+```

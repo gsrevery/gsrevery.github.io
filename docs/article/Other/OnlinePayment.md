@@ -19,6 +19,9 @@
 
 ## 在线支付-生成二维码
 安装插件：`yarn add qrcodejs2`
+
+页面地址可以通过插件生成二维码供用户扫码
+**特别注意：链接中的参数需要使用`/`连接，不然链接打不开！(例子：`${window.location.origin}/share-phone/index/${this.batchCode}/${this.scene}`)**
 ```vue
 <template>
     <Modal v-model="isShow" fullscreen footer-hide title="扫码支付" @on-visible-change="modalStatus">
