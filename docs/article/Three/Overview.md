@@ -210,11 +210,20 @@ Box3()：在物体上创建包围盒，计算两个物体包围盒是否相交�
 
 设置相机位置（position.set）
 
-### 模型贴图（CanvasTexture）
+### 模型贴图
+贴canvas（CanvasTexture）
 1. 创建一个canvas元素
 2. 作为一个参数传入THREE.CanvasTexture
 3. 贴图纹理更新texture.needsUpdate = true
 
+贴图片TextureLoader()
+
+```js
+var texture = new THREE.TextureLoader().load('/favico.ico')
+texture.wrapS = THREE.RepeatWrapping
+texture.wrapT = THREE.RepeatWrapping
+meshParamsNo.map = texture
+```
 
 ## 智能装箱功能
 ### 创建字体（TextGeometry）

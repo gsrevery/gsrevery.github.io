@@ -61,9 +61,10 @@ git checkout orphan 分支名
 * git push origin --delete <tag_name>：删除远程仓库中的某个标签。
 
 ## 将本地项目与远程仓库建立联系
-* git remote rm origin
-* git remote add origin git仓库地址
-* git pull origin 分支名
+* git remote -v 查看仓库源
+* git remote rm origin 删除关联对应的远程仓库地址
+* git remote add origin git仓库地址  将本地项目和远程的仓库进行关联
+* git pull origin 分支名 拉取仓库代码
 * git add .
 * git commit -m "commit名"
 * git push origin 分支名

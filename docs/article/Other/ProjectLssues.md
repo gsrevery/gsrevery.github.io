@@ -473,3 +473,36 @@ location = /index.html {
   add_header Cache-Control "no-cache, no-store";
 }
 ```
+
+## 接口数据压缩
+### 场景
+做悠闲装箱项目的时候，需要生成集装箱和货物的3D模型，有的时候货物会有上万条数据，这种情况下接口的响应时间会很长，通过数据压缩可以解决一部分问题。
+
+### pako插件
+Pako 是一个高性能的 JavaScript 库，用于在浏览器和 Node.js 环境中进行数据压缩和解压缩。它是 zlib 库的 JavaScript 移植版本，能够提供几乎与 C 语言实现相同的压缩速度。Pako 的主要特点包括：
+* 高性能：在现代 JavaScript 引擎中，Pako 的压缩和解压缩速度接近 C 语言实现的 zlib。
+* 跨平台：支持在浏览器和 Node.js 环境中运行。
+* 兼容性：生成的压缩数据与 zlib 兼容，可以直接在其他支持 zlib 的环境中使用。
+```js
+// npm安装
+npm install pako
+
+// yarn安装
+yarn add npm pako
+```
+
+### 实现
+接收到后端返回的压缩文件(正常的接口接收)，调用公共方法解压缩就可以直接使用了。公共方法如下：
+```js
+/**
+ * strData: 后端返回的数据
+ * 解压后端返回的gzip压缩数据
+ * */
+export function unzip(strData) {
+    let charData = strData.split('').map(function(x) { return x.charCodeAt(0) })
+    let binData = new Uint8Array(charData)
+    let data = pako.inflate(binData, { to: 'string' })
+    let unzipData = JSON.parse(data)
+    return unzipData
+}
+```

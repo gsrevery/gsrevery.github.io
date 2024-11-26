@@ -237,3 +237,91 @@ export default {
 }
 </script>
 ```
+
+## 表格合并
+涉及到表格中内容不确定时，需要合并相同数据下相邻表格，可以使用以下方法。
+```vue
+<template>
+    <div class="containers">
+        <Table ref="table" style="width: 100%;" :columns="tableColumns" :data="tableData" tooltip-theme="light" :span-method="handleSpan">
+        </Table>
+    </div>
+</template>
+<script>
+import Data from './data'
+export default {
+    data() {
+        return {
+            tableHeight: 0, // 表格高度
+            tableColumns: [
+                { title: '服务', key: 'type', minWidth: 140, align: 'center', },
+                { title: '增值服务功能', align: 'center',key: 'ability1', align: 'center', minWidth: 200, className: 'col-child' },
+                { title: '普通用户(48项)', key: 'user', slot: 'user', align: 'center', width: 140, className: 'col-text-red' },
+                { title: 'VIP用户(36项)', key: 'vip', slot: 'vip', align: 'center', minWidth: 130, className: 'col-text-red' }
+            ],
+            tableData: Data.tableData
+        }
+    },
+    methods: {
+        handleSpan({ row, column, rowIndex, columnIndex }) {
+            // 第一列
+            if (columnIndex === 0) {
+                // 只对 type 列进行处理
+                const rowspan = this.getRowspan(row, rowIndex, 'type');
+                if (rowspan >= 1) {
+                    return {
+                        rowspan,
+                        colspan: 1,
+                    };
+                } else {
+                    return {
+                        rowspan: 0,
+                        colspan: 0,
+                    };
+                }
+            }
+            // 第二列
+            if (columnIndex === 1) {
+                // 只对 ability1 列进行处理
+                const rowspan = this.getRowspan(row, rowIndex, 'ability1');
+                if (rowspan >= 1) {
+                    return {
+                        rowspan,
+                        colspan: 1,
+                    };
+                } else {
+                    return {
+                        rowspan: 0,
+                        colspan: 0,
+                    };
+                }
+            }
+        },
+        getRowspan(row, rowIndex, key) {
+            const currentFactorMainNumber = row[key];
+            let rowspan = 1; // 默认rowspan为1，也就是每个单元格只占一行
+            // 如果当前行不是第一行，则先查看前一行，如果前一行的值（同列单元格）与当前行（同列单元格）相同，则将当前单元格与前一行合并（当前单元格占0行，rowspan=0）
+            if (rowIndex > 0) {
+                const previousRow = this.tableData[rowIndex - 1];
+                const previousFactorMainNumber = previousRow[key];
+                if (currentFactorMainNumber === previousFactorMainNumber) {
+                    return 0;
+                }
+            }
+            // 然后向查看，如果后面行（同列单元格）的值与当前行（同列单元格）相同，则每找到一行rowspan加1，直到找到与当前行（同列单元格）的值不同的行为止。（也就是说只能合并连续的行）
+            for (let i = rowIndex + 1; i < this.tableData.length; i++) {
+                const nextRow = this.tableData[i];
+                const nextFactorMainNumber = nextRow[key];
+                if (currentFactorMainNumber === nextFactorMainNumber) {
+                    rowspan++;
+                } else {
+                    break;
+                }
+            }
+            return rowspan;
+        },
+    }
+}
+</script>
+
+```

@@ -239,10 +239,36 @@ random(1, 100) // 63
 
 ## 指定数字四舍五入
 ```js
-const round = (n, d) => Number(Math.round(n + "e" + d) + "e-" + d)
+// const round = (n, d) => Number(Math.round(n + "e" + d) + "e-" + d)
+function round (n, d) {
+    if(n || n === 0) {
+        return Number(Math.round(n + "e" + d) + "e-" + d)
+    } else {
+        return ''
+    }
+
+}
 
 round(3.1415926, 3) //3.142
 round(3.1415926, 1) //3.1
+
+function round(value) {
+    if (typeof value === 'number') {
+        let stashStr = value.toFixed(4)
+        let str = parseFloat(stashStr)
+        return str
+    } else {
+        if(value === '') return ''
+        let stashStr = Number(value).toFixed(4)
+        let str = parseFloat(stashStr)
+        return str
+    }
+}
+
+round(3.1415926, 3) //3.142
+round(3.1415926, 1) //3.1
+
+// 上面两种方式都可行
 ```
 
 ## 清除所有cookie

@@ -48,6 +48,19 @@
 ## 配置测试环境
 使用乾坤框架后的系统和普通系统配置一致：将主应用和各个子应用当作独立的系统进行独立的配置（主应用和各个子应用都需要分发ip+端口），配置好的端口号配置在主应用的环境变量中
 
+## 子应用预加载
+在`mainAppConfig.js`文件中配置
+```js
+import { prefetchApps } from 'qiankun'
+
+const hostname = `${location.protocol}//${location.hostname}` // 动态获取当前hostname，如果各个应用不在同一个服务器下，不能这么使用
+prefetchApps([
+    { name: 'packingPlatform', entry: `${hostname}${process.env.VUE_APP_PACK}` },
+    { name: 'findroutePlatform', entry: `${hostname}${process.env.VUE_APP_FINDROUTE}` },
+    { name: 'supplierPlatform', entry: `${hostname}${process.env.VUE_APP_SUPPLIER}` }
+])
+```
+
 ## 获取资源出错
 在本地主应用和子应用同时运行着，通过主应用访问子应用时提示资源找不到，这个时候可以看一下子应用是否使用的是路由懒加载，如果是请先改为普通路由后再试
 ```js
