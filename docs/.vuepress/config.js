@@ -138,6 +138,10 @@ module.exports = {
                     {
                         title: '页面',
                         path: '/article/Vue/SpecialPage'
+                    },
+                    {
+                        title: 'package配置',
+                        path: '/article/Vue/Package'
                     }
                 ]
             },
