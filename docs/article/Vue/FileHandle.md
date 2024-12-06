@@ -27,6 +27,38 @@
 ### 储存上传
 如果是需要将需要上传的文件和其他的参数一起通过`FormData`保存时，这个时候我们就需要先将上传的文件储存起来等其他参数获取完成后，再一起调用接口，将数据进行保存，UI组件中的上传就不太实用了。
 
+**注意：`FormData`对象传参时，数据不能嵌套，只能平铺**
+```js
+// 正确格式
+let data = new FormData()
+data.append('name', '小米')
+data.append('file', '图片base64')
+data.append('create', '雷子')
+
+// 入参呈现
+data: {
+    name: '小米',
+    file: '图片base64',
+    create: '雷子'
+}
+
+// 错误格式
+let data = new FormData()
+let list = [
+    { num: 2, prise: 200 },
+    { num: 3, prise: 300 },
+]
+data.append('name', '小米')
+data.append('file', '图片base64')
+data.append('list', list)
+// 入参呈现
+data: {
+    name: '小米',
+    file: '图片base64',
+    list: [object]
+}
+```
+
 <details>
 <summary><b>下面例子使用input框实现点击、拖拽文件上传的例子</b></summary>
 

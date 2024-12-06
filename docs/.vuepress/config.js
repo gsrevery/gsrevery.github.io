@@ -140,6 +140,10 @@ module.exports = {
                         path: '/article/Vue/SpecialPage'
                     },
                     {
+                        title: 'SEO优化',
+                        path: '/article/Vue/Seo'
+                    },
+                    {
                         title: 'package配置',
                         path: '/article/Vue/Package'
                     }
