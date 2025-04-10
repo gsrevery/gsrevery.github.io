@@ -53,6 +53,14 @@
 
 * 点击右上角的预览按钮或者`ctrl+shift+v`，在写markdown的同时就能预览页面。
 
+## MarsCode AI: Coding Assistant
+
+* MarsCode 是豆包旗下的智能编程助手，提供以智能代码补全为代表的核心能力，支持主流编程语言及 IDE，能在编码过程中提供单行或整个函数的建议，同时支持在用户编码过程中提供代码解释、单测生成、问题修复、技术问答等辅助功能，提升编码效率与质量。
+
+## MySQL
+
+* 连接数据库，安装及连接过程请查看[地址](https://blog.csdn.net/rej177/article/details/123450443)
+
 ## 常用设置
 ### 打开文件另起一个tab页签
 在`settings.json`文件下进行如下配置

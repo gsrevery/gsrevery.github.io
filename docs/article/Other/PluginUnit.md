@@ -224,6 +224,226 @@ export default {
 
 </details>
 
+## pdfjs-dist 实现pdf预览
+
+`pdfjs-dist`可以将文件服务器或者本地的pdf，展示在项目中，需要根据项目情况使用。
+<details>
+<summary><b>pdfjs-dist的使用方法</b></summary>
+引入pdfjs-dist:
+
+1. 在线引入：`<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.14.305/build/pdf.min.js"></script>`
+2. npm: npm install pdfjs-dist
+3. yarn: yarn add pdfjs-dist
+
+```vue
+<template>
+    <div>
+        <div id="pdf-preview-container">
+            <canvas v-for="(page, index) in pdfPages" :key="index" :id="'pdf-page-' + index"></canvas>
+        </div>
+    </div>
+</template>
+<script>
+    import pdfjsLib from 'pdfjs-dist'
+    export default {
+        data () {
+            return {
+                // 查看文件
+                fileviewUrl: process.env.VUE_APP_API_FILE,
+                filePath: false,
+                fileType: '',
+                pdfPages: [],
+                currentPage: 1,
+                totalPages: 0,
+                itemData: {
+                    url: '/8107aee9-d307-4621-adeb-3ae5c65a7202.pdf',
+                    name: '测试.pdf'
+                },
+            }
+        },
+        mounted () {
+            this.downloadFile(this.itemData)
+        },
+        methods: {
+            async downloadFile(item) {
+                this.filePath = item.url
+                this.fileType = item.name.split('.').pop().toLowerCase()
+                if (this.fileType === 'pdf') {
+                    this.$nextTick(async() => {
+                        const loadingTask = pdfjsLib.getDocument(`${this.fileviewUrl}${this.filePath}`)
+                        const pdf = await loadingTask.promise
+                        this.totalPages = pdf.numPages
+                        this.pdfPages = Array.from({ length: this.totalPages }, (_, index) => index + 1)
+
+                        // 使用循环渲染所有页面
+                        while (this.currentPage <= this.totalPages) {
+                            await this.renderPage(this.currentPage)
+                            this.currentPage++
+                        }
+                        // 渲染完成后，将当前页重置为第一页
+                        this.currentPage = 1
+                        this.renderPage(this.currentPage)
+
+                    })
+                } else {
+                    this.$Message.info('暂不支持该文件类型')
+                }
+            },
+            async renderPage(pageNumber, first) {
+                const loadingTask = pdfjsLib.getDocument(`${this.fileviewUrl}${this.filePath}`)
+                const pdf = await loadingTask.promise
+                const page = await pdf.getPage(pageNumber)
+
+                const canvas = document.getElementById(`pdf-page-${pageNumber - 1}`)
+                const ctx = canvas.getContext('2d')
+                // scale越大，图片越清晰，但是图片越大，加载时间越长
+                const viewport = page.getViewport({ scale: 4.0 })
+                canvas.height = viewport.height
+                canvas.width = viewport.width
+
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                }
+                await page.render(renderContext).promise
+            }
+        },
+    }
+</script>
+<style lang="scss" scoped>
+#pdf-preview-container {
+    canvas {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+</style>
+```
+</details>
+
+## xlsx 实现线上xlsx预览
+xlsx可以将文件服务器或者本地的excel，展示在项目中，需要根据项目情况使用。
+
+**注意该方案不适用于excel中有图片和多sheet页情况，如果需要预览上述内容可以采用iframe嵌套Microsoft Office Online Viewer、Google Docs Viewer等**
+<details>
+<summary><b>xlsx的使用方法</b></summary>
+引入xlsx:
+
+1. 在线引入：`<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>`
+2. npm: npm install xlsx
+3. yarn: yarn add xlsx
+
+```vue
+<template>
+    <div>
+        <div id="excel-preview" class="excel-preview"></div>
+    </div>
+</template>
+<script>
+    import XLSX from 'xlsx'
+    export default {
+        data () {
+            return {
+                // 查看文件
+                fileviewUrl: process.env.VUE_APP_API_FILE,
+                filePath: false,
+                fileType: '',
+                itemData: {
+                    url: '/8107aee9-d307-4621-adeb-3ae5c65a7202.xls',
+                    name: '测试.xls'
+                },
+            }
+        },
+        mounted () {
+            this.downloadFile(this.itemData)
+        },
+        methods: {
+            async downloadFile(item) {
+                this.filePath = item
+                this.fileType = item.split('.').pop().toLowerCase()
+                if (this.fileType === 'xls' || this.fileType === 'xlsx') {
+                    // 读取 Excel 文件并渲染到页面
+                    const response = await fetch(`${this.fileviewUrl}/${this.filePath}`)
+                    const arrayBuffer = await response.arrayBuffer()
+                    const data = new Uint8Array(arrayBuffer)
+                    const workbook = XLSX.read(data, { type: 'array' })
+                    const excelPreview = document.getElementById('excel-preview')
+                    excelPreview.innerHTML = ''
+                    // 遍历所有工作表
+                    workbook.SheetNames.forEach((sheetName, index) => {
+                        const worksheet = workbook.Sheets[sheetName]
+                        const html = XLSX.utils.sheet_to_html(worksheet)
+
+                        // 创建一个新的 div 来包含每个工作表
+                        const sheetDiv = document.createElement('div')
+                        sheetDiv.innerHTML = html
+                        sheetDiv.classList.add('excel-sheet')
+
+                        // 为每个工作表添加标题
+                        const title = document.createElement('h3')
+                        title.textContent = `工作表 ${index + 1}: ${sheetName}`
+                        sheetDiv.prepend(title)
+
+                        excelPreview.appendChild(sheetDiv)
+                    })
+
+                    // 手动添加类名
+                    const tables = excelPreview.querySelectorAll('table')
+                    // 手动添加样式，因为xlsx生成的table是默认样式，在样式上做调整可能不会生效，直接js添加样式
+                    tables.forEach(table => {
+                        table.classList.add('excel-table')
+                        console.log(table, 'table')
+                        // 给 table 添加样式
+                        table.style.borderCollapse = 'collapse'
+                        table.style.width = '100%'
+                        table.style.backgroundColor = 'white'
+                        // 调整高度以撑满弹窗
+                        table.style.height = 'calc(100vh - 4rem - 30px)'
+                        // 添加垂直滚动条
+                        table.style.overflow = 'auto'
+                        // table.style.fontSize = '0.6rem'
+                        // 给 table 内所有的 tr、td 添加样式
+                        const cells = table.querySelectorAll('tr, td')
+                        cells.forEach(cell => {
+                            cell.style.border = '1px solid #ccc'
+                            cell.style.padding = '0.5rem'
+                            cell.style.textAlign = 'center'
+                            cell.style.fontSize = '0.6rem'
+                            // 文字不换行
+                            cell.style.whiteSpace = 'nowrap'
+                            cell.style.overflow = 'hidden'
+                            cell.style.textOverflow = 'ellipsis'
+                        })
+                    })
+                }
+            },
+        },
+    }
+</script>
+<style lang="scss" scoped>
+</style>
+```
+```vue
+<!-- Microsoft Office Online Viewer的使用方法： -->
+<!-- 注意：这种方式只适用于文件存放在能使用https访问通的服务器上，不然会出现跨域问题，导致文件无法显示 -->
+<template>
+    <iframe
+        :src="`https://view.officeapps.live.com/op/embed.aspx?src=${fileUrl}`" 
+        style="width:100%; height: calc(100vh - 4rem - 30px);" 
+        frameborder="0"
+    >
+    </iframe>
+</template>
+<script>
+    data() {
+        return {
+            fileUrl: 'https://baidu.com/8107aee9-d307-4621-adeb-3ae5c65a7202.xls'
+        } 
+    }
+</script>
+```
+</details>
+
 
 ## ssh2 + archiver 实现代码自动打包上传
 
