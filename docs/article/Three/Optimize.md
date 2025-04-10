@@ -1,5 +1,29 @@
 # three性能优化
 
+## 性能监控
+创建性能监控能够帮助我们更好的了解当前场景的渲染帧率（FPS）、延迟-毫秒（MS）、占用内存（MB），方便我们更好的进行性能优化。
+
+<img src="../../../images/three/stats.jpg" alt="three性能监控" style="zoom: 100%;" />
+
+```js
+createStats(options = {}) {
+    return new Promise(resolve => {
+        const { id = 0, width = 100, position = { top: 0, left: 0, right: 0, bottom: 0 } } = options
+        this.stats = new Stats()
+        this.stats.setMode(id)
+        this.stats.domElement.style.width = `${width}px`
+        this.stats.domElement.style.position = 'absolute'
+        this.stats.domElement.style.top = position.top
+        this.stats.domElement.style.left = position.left
+        this.stats.domElement.style.right = position.right
+        this.stats.domElement.style.bottom = position.bottom
+        document.getElementById(this.el).appendChild(this.stats.domElement)
+        resolve()
+    })
+}
+createStats({ id: 0, width: 80, position: { top: '80px', left: 'auto', right: '15px' } }),
+```
+
 ## 创建模型时，尽量使用基类
 通过Threejs提供的几何体类，比如球体、圆柱等几何体类创建几何体，最好使用基类是BufferGeometry而不是Geometry几何体类。
 
@@ -13,31 +37,35 @@
 
 修改帧率代码
 ```js
-// 创建一个时钟对象Clock
-let clock = new THREE.Clock()
-// 设置渲染频率为10FBS，也就是每秒调用渲染器render方法大约10次
-let FPS = 10
-// 单位秒间隔多长时间渲染渲染一次
-let renderT = 1 / FPS
-// 声明一个变量表示render()函数被多次调用累积时间
-// 如果执行一次renderer.render，timeS重新置0
-timeS = 0
-function render() {
-    requestAnimationFrame(render)
-    // .getDelta()方法获得两帧的时间间隔
-    var T = clock.getDelta()
-    timeS = timeS + T
-    // requestAnimationFrame默认调用render函数60次，通过时间判断，降低renderer.render执行频率
-    if (timeS > renderT) {
-        // 控制台查看渲染器渲染方法的调用周期，也就是间隔时间是多少
-        console.log(`调用.render时间间隔`, timeS * 1000 + '毫秒')
-        //执行渲染操作
-        renderer.render(scene, camera)
-        //renderer.render每执行一次，timeS置0
-        timeS = 0
-    }
+/**
+ * 执行渲染程序
+ */
+render() {
+    return new Promise(resolve => {
+        if (!this.renderer) {
+            return
+        }
+        // 控制帧率
+        // 帧率越小，在货物数量较多的情况下越流畅，越大，在货物数量较少的情况下越流畅
+        const targetFPS = 30; // 目标帧率
+        const frameInterval = 1000 / targetFPS; // 每一帧的时间间隔（毫秒）
+        const now = Date.now();
+        if (this.lastFrameTime === undefined) {
+            this.lastFrameTime = now;
+        }
+        const elapsed = now - this.lastFrameTime;
+        if (elapsed >= frameInterval) {
+            this.controls.update();
+            this.stats && this.stats.update();
+            // 渲染模糊处理【像素比】
+            this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            this.renderer.render(this.scene, this.camera);
+            this.lastFrameTime = now;
+        }
+        this.renderAnimate = requestAnimationFrame(this.render.bind(this)); // bind改变this指向不会立即调用函数
+        resolve();
+    })
 }
-render()
 ```
 
 帧率优化的思路主要是需要时才渲染，无操作时不调用`render()`。什么时候需要调用渲染呢？主要包含以下情况：
