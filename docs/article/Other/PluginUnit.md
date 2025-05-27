@@ -2,23 +2,93 @@
 
 ## html2canvas HTML转Canvas/图片工具
 
-html2canvas.js是一款优秀的插件，它可以轻松地帮你将HTML代码转换成Canvas，进而生成可保存分享的图片。
+`html2canvas.js`是一款优秀的插件，它可以轻松地帮你将`HTML`代码转换成`Canvas`，进而生成可保存分享的图片。
+
+**注意：该插件有一个问题，每执行一次`htmlhtml2canvas`时，会重新加载一遍系统的静态资源，导致生成图片很慢及浏览器内存占用严重，所以在截图很多遍的时候需要换一个插件`domtoimage`**
 ```html
-<div id="qianduanwz">
-  <img src="./images/qrcode.jpg" alt="">
-  <p>内容</p>
-</div>
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    </head>
+    <body>
+        <div id="qianduanwz">
+            <p>截图内容</p>
+        </div>
+
+        <script>
+            // 使用立即执行异步函数，以便使用 await
+            (async function() {
+                try {
+                    const targetElement = document.getElementById('qianduanwz')
+                    if (!targetElement) {
+                        return
+                    }
+                    const canvas = await html2canvas(targetElement, {
+                        // 允许跨域资源
+                        useCORS: true, 
+                        // 关闭日志记录，减少性能开销
+                        logging: false, 
+                        // 降低 dpi 和 scale，减少资源需求
+                        dpi: window.devicePixelRatio, 
+                        scale: 2,
+                    })
+                    let oImg = new Image()
+                    oImg.src = canvas.toDataURL('image/jpeg', 0.7) 
+                    oImg.onload = function() {
+                        document.body.appendChild(oImg)
+                    }
+                    oImg.onerror = function() {
+                        console.error('图片创建失败')
+                    }
+                } catch (error) {
+                    console.error('截图失败:', error) 
+                }
+            })()
+        </script>
+    </body>
+</html>
 ```
-```js
-<script src="./scripts/html2canvas.js"></script>
-<script>
-  new html2canvas(document.getElementById('qianduanwz')).then(canvas => {
-    // canvas为转换后的Canvas对象
-    let oImg = new Image();
-    oImg.src = canvas.toDataURL();  // 导出图片
-    document.body.appendChild(oImg);  // 将生成的图片添加到body
-  });
-</script>
+
+## domtoimage 图片生成工具
+`domtoimage.js`是一款轻量级的插件，它可以轻松地帮你将`DOM`元素转换成图片。
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <script src="https://unpkg.com/dom-to-image/dist/dom-to-image.min.js"></script>
+    </head>
+    <body>
+        <div id="qianduanwz" style="background: white;">
+            <p style="padding: 20px;">截图内容</p>
+        </div>
+
+        <script>
+            // 使用立即执行异步函数，以便使用 await
+            (async function() {
+                try {
+                    const targetElement = document.getElementById('qianduanwz')
+                    if (!targetElement) {
+                        return
+                    }
+                    const imgData = await domtoimage.toJpeg(targetElement, {
+                        quality: 0.7, // 图像质量，对应 html2canvas 中 toDataURL 的第二个参数
+                    });
+                    let oImg = new Image()
+                    oImg.src = imgData
+                    oImg.onload = function() {
+                        document.body.appendChild(oImg)
+                    }
+                    oImg.onerror = function() {
+                        console.error('图片创建失败')
+                    }
+                } catch (error) {
+                    console.error('截图失败:', error) 
+                }
+            })()
+        </script>
+    </body>
+</html>
 ```
 
 ## jspdf转pdf工具

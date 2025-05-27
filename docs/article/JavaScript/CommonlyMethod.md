@@ -40,6 +40,7 @@ export function aDownLoadBlob (url, data, fileName) {
 ## 页面懒加载
 后端接口查询压力过大时，或者页面渲染太慢，就可以使用页面懒加载来缓解压力。
 
+### 方案一：利用js监听滚动条
 ```js
 <div class="ytxd-all" @scroll="rollFn()"></div>
 
@@ -55,5 +56,32 @@ rollFn() {
             this.clickSearch('gundong')
         }
     }
+}
+```
+
+### 方案二：使用浏览器内置API`IntersectionObserver`
+```js
+    <li v-for="(item, id) in useAsync.list" :key="id" style="height: 50vh;">{{ item.name }}</li>
+    <div id="loading" style="bottom: 0; text-align: center;">加载中...</div>
+
+scrollFn () {
+    // 加载更多
+    let observer = new IntersectionObserver((entries) => {
+        console.log(entries, 'entries')
+        // entries是一个数组，每个元素都是一个IntersectionObserverEntry对象
+        for (const entrie of entries) {
+            // 元素可见
+            if (entrie.isIntersecting) {
+                this.page++
+                this.getData()
+            }
+        }
+    },
+    {
+        root: null, // 根元素，默认为视口
+        threshold: 0 // 交叉比例，默认为0
+    })
+    let loadingRef = document.getElementById('loading')
+    observer.observe(loadingRef)
 }
 ```
