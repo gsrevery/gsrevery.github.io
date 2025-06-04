@@ -91,6 +91,133 @@
 </html>
 ```
 
+## puppeteer 无头浏览器
+`puppeteer`是一款基于`Chrome`的无头浏览器，它可以让你在`Node.js`环境中控制`Chrome`浏览器，实现自动化操作。
+
+### 什么是无头浏览器
+无头浏览器是一种没有界面的浏览器，通常用于自动化测试、爬虫等场景。
+
+### puppeteer的使用
+`puppeteer`的使用非常简单，只需要安装`puppeteer`包，然后使用`puppeteer.launch()`方法启动浏览器，再使用`page.goto()`方法跳转到指定页面，最后使用`page.screenshot()`方法截图。
+#### puppeteer的安装
+`puppeteer`不能通过地址直接引用，需要先安装`puppeteer`包，然后再引用。
+```bash
+npm install puppeteer
+# 或者使用yarn
+yarn add puppeteer
+```
+#### 创建脚本
+创建一个新的`JavaScript`文件，例如`puppeteer.js`，然后输入以下代码：
+```js
+const puppeteer = require('puppeteer')
+
+(async () => {
+    // 启动浏览器实例
+    const browser = await puppeteer.launch() // 默认情况下，Puppeteer以无头模式启动Chrome
+    const page = await browser.newPage()
+
+    // 访问指定网址
+    await page.goto('https://example.com', {waitUntil: 'networkidle2'})
+
+    // 设置视窗大小
+    await page.setViewport({
+        width: 1920,
+        height: 1080,
+    })
+
+    // 截图并保存到当前目录
+    await page.screenshot({path: 'example.png', fullPage: true})
+
+    console.log('截图已保存为 example.png')
+
+    // 关闭浏览器
+    await browser.close()
+})()
+```
+#### 运行脚本
+在终端中运行以下命令：
+```bash
+node puppeteer.js
+```
+如果一切正常，你应该会在当前目录中看到一个名为`example.png`的文件，它是`URL_ADDRESS如果一切正常，你应该会在当前目录中看到一个名为`example.png`的文件，它是`https://example.com`页面的截图。
+
+#### 注意事项
+
+* `puppeteer`使用时node版本需要大于等于18不然会出现以下报错
+<img src="../../../images/other/puppeteer-node版本过低.png">
+
+* `puppeteer`使用时如果找不到出现以下报错，则说明`puppeteer`在安装时没有下载`chromium`，需要重新安装`puppeteer.js`
+<img src="../../../images/other/puppeteer-找不到浏览器.png">
+
+### puppeteer-core的使用场景
+如果你想安装一个更轻量级的版本，只包含基本的浏览器功能而不包括默认的`Chromium`浏览器（适用于你计划使用自己的` Chrome/Chromium `实例的情况），你可以安装` puppeteer-core`：
+
+安装/使用方式和`puppeteer`一样，只需要将`puppeteer`替换为`puppeteer-core`即可。
+```js
+const puppeteer = require('puppeteer-core');
+const path = require('path');
+const os = require('os');
+const fs = require('fs');
+
+function getChromePath() {
+    const platform = os.platform();
+    switch (platform) {
+        case 'win32':
+            const possiblePaths = [
+                'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+                'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+            ]
+            for (const possiblePath of possiblePaths) {
+                if (fs.existsSync(possiblePath)) {
+                    return possiblePath
+                }
+            }
+            break;
+        case 'darwin':
+            const macPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+            if (fs.existsSync(macPath)) {
+                return macPath
+            }
+            break;
+        case 'linux':
+            const linuxPaths = [
+                '/usr/bin/google-chrome',
+                '/usr/bin/chromium-browser',
+                '/usr/local/bin/chromium',
+            ]
+            for (const linuxPath of linuxPaths) {
+                if (fs.existsSync(linuxPath)) {
+                    return linuxPath
+                }
+            }
+            break;
+        default:
+            break;
+    }
+    return null
+}
+
+(async () => {
+    const chromePath = getChromePath()
+    if (!chromePath) {
+        console.error('未找到 Chrome 安装路径，无法继续执行。');
+        return
+    }
+    const browser = await puppeteer.launch({
+        executablePath: chromePath,
+    });
+    const page = await browser.newPage()
+    await page.goto('https://example.com')
+    const desktopPath = os.homedir() + '/Desktop'
+    const screenshotPath = path.join(desktopPath, 'example.png')
+    await page.screenshot({ path: screenshotPath })
+
+    await browser.close()
+})()
+```
+
+
+
 ## jspdf转pdf工具
 `jspdf.js`工具普遍的使用场景为，纯前端将页面上的元素导出为`pdf`,当遇到这种场景时，我们可以搭配着`html2canvas.js`一起使用。
 

@@ -41,3 +41,41 @@ js引擎遇到一个异步事件后并不会一直等待其返回结果，而是
     3
     1
 ```
+
+顺序执行
+```javascript
+async _cycleFn() {
+    for (let i = 0; i < 10; i++) {
+        console.log(i, '第一层循环')
+        let waitData = await this._waitFn()
+        console.log(waitData, '第一层等待')
+        for (let j = 0; j < 10; j++) {
+            console.log(j, '第二层循环')
+            let waitData2 = await this._waitFn()
+            console.log(waitData2, '第二层等待')
+            let _cycleFn2Data =  await this._cycleFn2()
+            console.log(_cycleFn2Data, '_cycleFn2Data')
+        }
+    }
+},
+async _cycleFn2() {
+    load: for (let i = 0; i < 10; i++) {
+        console.log(i, '第三层循环')
+        if (i === 5) {
+            break load
+        }
+    }
+    return '第三层循环结束'
+},
+async _waitFn() {
+    // 这里模拟接口请求，返回数据后再执行
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('1111')
+        }, 1000)
+    })
+},
+
+// 顺序执行
+this._cycleFn()
+```
