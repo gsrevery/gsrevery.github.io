@@ -226,6 +226,24 @@ module.exports = {
                         path: '/article/Three/Cannon'
                     },
                 ]
+            },
+            {
+                title: 'Python',
+                collapsable: false,
+                children: [
+                    {
+                        title: 'Grammar',
+                        path: '/article/Python/Grammar'
+                    },
+                    {
+                        title: 'PySide6',
+                        path: '/article/Python/PySide6'
+                    },
+                    {
+                        title: 'Use',
+                        path: '/article/Python/Use'
+                    }
+                ]
             }
         ]
     },
