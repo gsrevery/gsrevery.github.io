@@ -98,6 +98,8 @@ pyinstaller --onefile --add-data "style.qss;." --add-data "static/static" main.p
 pyinstaller --onefile --add-data "style.qss;." --add-data "static/static" --icon "static/favico.ico" main.py
 ```
 
+3. 打包完成后，在`dist`目录下即可找到打包好的文件，文件图标可能不是指定的图标，把该`exe`文件复制出来图标可能就更新了。
+
 ### 窗口图标和任务栏图标
 1. 先准备一个图标文件，格式为`.ico`、`.png`等
 

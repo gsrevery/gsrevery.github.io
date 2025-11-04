@@ -232,7 +232,15 @@ module.exports = {
                 collapsable: false,
                 children: [
                     {
-                        title: 'Grammar',
+                        title: 'Basic基础',
+                        path: '/article/Python/Basic'
+                    },
+                    {
+                        title: 'FixexMethod固定方法',
+                        path: '/article/Python/FixexMethod'
+                    },
+                    {
+                        title: 'Grammar语法',
                         path: '/article/Python/Grammar'
                     },
                     {
@@ -240,8 +248,12 @@ module.exports = {
                         path: '/article/Python/PySide6'
                     },
                     {
-                        title: 'Use',
+                        title: 'Use使用',
                         path: '/article/Python/Use'
+                    },
+                    {
+                        title: 'Crawler爬虫',
+                        path: '/article/Python/Crawler'
                     }
                 ]
             }
