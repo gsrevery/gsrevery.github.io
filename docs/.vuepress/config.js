@@ -256,6 +256,16 @@ module.exports = {
                         path: '/article/Python/Crawler'
                     }
                 ]
+            },
+            {
+                title: 'AI',
+                collapsable: false,
+                children: [
+                    {
+                        title: 'XGBoost',
+                        path: '/article/AI/XGBoost'
+                    }
+                ]
             }
         ]
     },
