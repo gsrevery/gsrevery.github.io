@@ -182,7 +182,14 @@ export default {
 * 表格勾选和上面一样
 ```vue
 <template>
-    <Table border :columns="columnsData" :data="searchList" @on-row-click="clickRow" max-height="300">
+    <Table
+        border
+        :columns="columnsData"
+        :data="searchList"
+        @on-row-click="clickRow"
+        max-height="300"
+        :row-class-name="rowClassName"
+    >
         <template slot-scope="{ row }" slot="radio">
             <RadioGroup v-model="isOnClick">
                 <Radio :label="row.stdDataId">&nbsp;</Radio>
@@ -224,18 +231,33 @@ export default {
                     key: 'nameRu',
                     tooltip: true
                 }
-            ]
+            ],
+            rowData: {}
         },
         methods: {
             // 点击单元行
             clickRow(row) {
                 // dataId 需要唯一值
                 this.isOnClick = row.dataId
+                this.rowData = row
+            },
+            // 给点击的对应行加上颜色
+            rowClassName(row) {
+                if (this.rowData && row.dataId === this.rowData.dataId) {
+                    return 'clicked-row';
+                }
+                return '';
             },
         }
     },
 }
 </script>
+
+<style lang="less" scoped>
+::v-deep(.clicked-row),
+::v-deep(.clicked-row td) {
+    background-color:  #D9E8F7 !important;
+}
 ```
 
 ## 表格合并
