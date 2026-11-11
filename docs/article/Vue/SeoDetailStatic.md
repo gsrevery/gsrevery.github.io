@@ -989,9 +989,18 @@ setSeoMeta({
 crontab（每天凌晨 0 点，服务器执行 `crontab -e`）：
 执行步骤：
 * 打开服务器终端，执行 `crontab -e` 进入 crontab 编辑模式。
-* Shift + i进入编辑模式，输入以下内容：
+* `Shift + i`进入编辑模式，输入以下内容：
 ```
 0 0 * * * cd /mnt/nginx/saasTestNew/dynamic-render-service && node prewarm.js >> /root/.pm2/logs/prewarm.log 2>&1
+```
+上面内容可能会不生效，因为`crontab`环境里找不到`node`命令。
+所以保险起见，建议加上`node`的路径：
+```
+which node
+```
+比如输出的路径为：`/root/.nvm/versions/node/v14.21.3/bin/node` 将输出的路径替换到`crontab` 里：
+```
+0 0 * * * cd /mnt/nginx/saasTestNew/dynamic-render-service && /root/.nvm/versions/node/v14.21.3/bin/node prewarm.js >> /root/.pm2/logs/prewarm.log 2>&1
 ```
 * 编辑完成，`esc`进入退出编辑模式，`:wq`保存退出。
 * 验证 crontab 是否生效：`crontab -l` 查看所有定时任务。
