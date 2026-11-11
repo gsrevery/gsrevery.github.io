@@ -144,6 +144,10 @@ module.exports = {
                         path: '/article/Vue/Seo'
                     },
                     {
+                        title: 'SEO详情页静态化',
+                        path: '/article/Vue/SeoDetailStatic'
+                    },
+                    {
                         title: 'package配置',
                         path: '/article/Vue/Package'
                     }
@@ -261,6 +265,10 @@ module.exports = {
                 title: 'AI',
                 collapsable: false,
                 children: [
+                    {
+                        title: 'Mlflow',
+                        path: '/article/AI/Mlflow'
+                    },
                     {
                         title: 'XGBoost',
                         path: '/article/AI/XGBoost'
